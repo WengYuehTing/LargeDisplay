@@ -1,0 +1,17 @@
+﻿<Window x:Class="BodySee.GestureWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BodySee"
+        mc:Ignorable="d"
+        AllowsTransparency="true"
+        Background="Transparent"
+        WindowStyle="None"
+        Topmost="true"
+        WindowState="Maximized"
+        Title="GestureWindow" Height="450" Width="800">
+    <Button Name="GestureButton" Opacity="0.01" TouchDown="GestureButton_TouchDown" KeyDown="GestureButton_KeyDown" TouchMove="GestureButton_TouchMove" TouchUp="GestureButton_TouchUp">
+        
+    </Button>
+</Window>

@@ -1,0 +1,14 @@
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\bin\Release\BodySee.exe.config
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\bin\Release\BodySee.exe
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\bin\Release\BodySee.pdb
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Release\MainWindow.g.cs
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Release\App.g.cs
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Release\BodySee_MarkupCompile.cache
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Release\BodySee_MarkupCompile.lref
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Release\MainWindow.baml
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Release\BodySee.g.resources
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Release\BodySee.Properties.Resources.resources
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Release\BodySee.csproj.GenerateResource.cache
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Release\BodySee.csproj.CoreCompileInputs.cache
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Release\BodySee.exe
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Release\BodySee.pdb
