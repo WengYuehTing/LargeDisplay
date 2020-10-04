@@ -16,38 +16,30 @@ using System.Windows.Shapes;
 using System.Runtime.InteropServices;
 using System.IO;
 using Microsoft.Win32;
+using BodySee.Tools;
 
-namespace BodySee
+namespace BodySee.Windows
 {
     /// <summary>
     /// WhiteBoard.xaml 的交互逻辑
     /// </summary>
     public partial class WhiteBoard : Window
     {
-        #region Private Field
-        private CommandStack _cmdStack;
-        private int _editingOperationCount;
+        #region Private Fields
+        private CommandStack    _cmdStack;
+        private int             _editingOperationCount;
         #endregion
 
         public WhiteBoard(MainWindow main)
         {
             InitializeComponent();
-            FullScreen();
             TaskManager.getInstance().whiteBoard = this;
             _cmdStack = new CommandStack(canvas.Strokes);
             canvas.Strokes.StrokesChanged += Strokes_StrokesChanged;
             _editingOperationCount = 0;
         }
-        
-        /// <summary>
-        /// 进入全屏模式
-        /// </summary>
-        private void FullScreen()
-        {
-            this.WindowState = WindowState.Maximized;
-        }
 
-
+        #region Public Interfaces
         /// <summary>
         /// 修改画笔颜色
         /// </summary>
@@ -96,18 +88,13 @@ namespace BodySee
             canvas.Strokes.Clear();
         }
 
+
         /// <summary>
         /// 撤销最近一次的操作
         /// </summary>
         public void Undo()
         {
-            try
-            {
-                _cmdStack.Undo();
-            } catch (InvalidOperationException e)
-            {
-                Console.WriteLine(e.Message);
-            }
+            _cmdStack.Undo();
         }
 
 
@@ -116,28 +103,20 @@ namespace BodySee
         /// </summary>
         public void Redo()
         {
-            try
-            {
-                _cmdStack.Redo();
-            }
-            catch (InvalidOperationException e)
-            {
-                Console.WriteLine(e.Message);
-            }
+            _cmdStack.Redo();
         }
 
 
+        /// <summary>
+        /// 保存图片到本地
+        /// </summary>
         public void Save()
         {
-            Image file;
             SaveFileDialog f = new SaveFileDialog();
             f.FileName = "sketch" + DateTime.Now.ToString("yyyyMMddhhmmss");
             f.DefaultExt = ".jpg";
             f.Filter = "Image (.jpg .png) | *.jpg *.png";
-
-            Nullable<bool> result = f.ShowDialog();
-
-            if(result == true)
+            if(f.ShowDialog() == true)
             {
                 string filename = f.FileName;
                 int margin = (int)canvas.Margin.Left;
@@ -149,27 +128,26 @@ namespace BodySee
                 canvas.Margin = new Thickness(0, 0, 0, 0);
                 canvas.Measure(size);
                 canvas.Arrange(new Rect(size));
-
                 RenderTargetBitmap rtb = new RenderTargetBitmap((int)size.Width, (int)size.Height, 96d, 96d, PixelFormats.Default);
                 rtb.Render(canvas);
-
                 using (FileStream fs = new FileStream(filename, FileMode.Create))
                 {
                     BmpBitmapEncoder encoder = new BmpBitmapEncoder();
                     encoder.Frames.Add(BitmapFrame.Create(rtb));
                     encoder.Save(fs);
                 }
-
                 canvas.Margin = thickness;
             }
         }
+        #endregion
 
+        #region Private Methods
         /// <summary>
         /// 监听stroke变化事件
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void Strokes_StrokesChanged(object sender, StrokeCollectionChangedEventArgs e)
+        private void Strokes_StrokesChanged(object sender, StrokeCollectionChangedEventArgs e)
         {
             StrokeCollection added = new StrokeCollection(e.Added);
             StrokeCollection removed = new StrokeCollection(e.Removed);
@@ -211,7 +189,7 @@ namespace BodySee
                 Save();
             }
         }
-
+        
 
         /// <summary>
         /// Increment operation count for undo/redo. 
@@ -222,5 +200,6 @@ namespace BodySee
         {
             _editingOperationCount++;
         }
+        #endregion
     }
 }

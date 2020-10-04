@@ -7,10 +7,10 @@ using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Interop;
+using BodySee.Windows;
 
-namespace BodySee
+namespace BodySee.Tools
 {
-
     class WinApiManager
     {
         public enum GetAncestorFlags
@@ -27,8 +27,7 @@ namespace BodySee
             public int Right;
             public int Bottom;
         }
-
-        public delegate bool EnumWindowsProc(IntPtr hWnd, int lParam);
+        
 
         #region Win32 API 
         [DllImport("user32.dll", SetLastError = true)]
@@ -85,9 +84,11 @@ namespace BodySee
 
         [DllImport("user32.dll", SetLastError = true)]
         public static extern bool SetWindowPos(IntPtr hwnd, IntPtr hwndInsertAfter, int X, int Y, int cx, int cy, int uFlags);
+
+        public delegate bool EnumWindowsProc(IntPtr hWnd, int lParam);
         #endregion
 
-        #region Window Message Code
+        #region Windows Message Code
         public static UInt32 WM_CLOSE = 0x0010;
         public static UInt32 WM_MOVE = 0x0003;
         public static UInt32 WM_SYSCOMMAND = 0x0112;
@@ -105,57 +106,54 @@ namespace BodySee
         private static int SWP_SHOWWINDOW = 0x0040;
         #endregion
 
-        #region Window Operation
-        public static void CloseWindow()
+        #region Public Interfaces
+        public static void CloseWindow(IntPtr hwnd)
         {
-            Console.WriteLine("Close Window");
-            IntPtr hWnd = FindTopmostWindow();
-            if (hWnd != IntPtr.Zero)
+            if (hwnd != IntPtr.Zero)
             {
-                SendMessage(hWnd, WM_CLOSE, 0, IntPtr.Zero);
+                Console.WriteLine("Close Window:" + GetTitleFromHandle(hwnd));
+                SendMessage(hwnd, WM_CLOSE, 0, IntPtr.Zero);
             }
-            
         }
 
-        public static void MinimizeWindow()
+        public static void MinimizeWindow(IntPtr hwnd)
         {
-            Console.WriteLine("Minimize Window");
-            IntPtr hWnd = FindTopmostWindow();
-            if (hWnd != IntPtr.Zero)
+            if (hwnd != IntPtr.Zero)
             {
-                SendMessage(hWnd, WM_SYSCOMMAND, SC_MINIMIZE, IntPtr.Zero);
+                Console.WriteLine("Minimize Window: " + GetTitleFromHandle(hwnd));
+                SendMessage(hwnd, WM_SYSCOMMAND, SC_MINIMIZE, IntPtr.Zero);
             } 
         }
 
-        public static void MaximizeWindow()
+        public static void MaximizeWindow(IntPtr hwnd)
         {
-            Console.WriteLine("Maximize Window");
-            IntPtr hWnd = FindTopmostWindow();
-            if (hWnd != IntPtr.Zero)
+            if (hwnd != IntPtr.Zero)
             {
-                SendMessage(hWnd, WM_SYSCOMMAND, SC_MAXIMIZE, IntPtr.Zero);
+                Console.WriteLine("Maximize Window: " + GetTitleFromHandle(hwnd));
+                SendMessage(hwnd, WM_SYSCOMMAND, SC_MAXIMIZE, IntPtr.Zero);
             }
         }
 
-        public static void RestoreWindow()
+        public static void RestoreWindow(IntPtr hwnd)
         {
-            //Console.WriteLine("Restore Window");
-            //if (targetHwnd != IntPtr.Zero)
-            //{
-            //    SendMessage(targetHwnd, WM_SYSCOMMAND, SC_RESTORE, IntPtr.Zero);
-            //}
+            if (hwnd != IntPtr.Zero)
+            {
+                Console.WriteLine("Restore Window: " + GetTitleFromHandle(hwnd));
+                SendMessage(hwnd, WM_SYSCOMMAND, SC_RESTORE, IntPtr.Zero);
+            }
         }
 
         public static void MoveWindow(IntPtr hwnd, int xOffset, int yOffset)
         {
-            if (hwnd == IntPtr.Zero)
-                return;
-            RECT rect = GetWindowRect(hwnd);
-            int width = Math.Abs(rect.Right - rect.Left);
-            int height = Math.Abs(rect.Bottom - rect.Top);
-            int x = Math.Max(0 - width/2, Math.Min((int)Utility.getScreenWidth()+width/2, rect.Left + xOffset));
-            int y = Math.Max(0, Math.Min((int)Utility.getScreenHeight(), rect.Top + yOffset));
-            SetWindowPos(hwnd, IntPtr.Zero, x, y, 0, 0, SWP_NOSIZE | SWP_NOACTIVATE | SWP_NOZORDER | SWP_SHOWWINDOW);
+            if (hwnd != IntPtr.Zero)
+            {
+                RECT rect = GetWindowRect(hwnd);
+                int width = Math.Abs(rect.Right - rect.Left);
+                int height = Math.Abs(rect.Bottom - rect.Top);
+                int x = Math.Max(0 - width / 2, Math.Min((int)Utility.getScreenWidth() + width / 2, rect.Left + xOffset));
+                int y = Math.Max(0, Math.Min((int)Utility.getScreenHeight(), rect.Top + yOffset));
+                SetWindowPos(hwnd, IntPtr.Zero, x, y, 0, 0, SWP_NOSIZE | SWP_NOACTIVATE | SWP_NOZORDER | SWP_SHOWWINDOW);
+            }
         }
 
         public static void ScaleWindow(IntPtr hwnd, double xRatio, double yRatio)
@@ -177,8 +175,27 @@ namespace BodySee
             SetWindowPos(hwnd, IntPtr.Zero, nx, ny, nWidth, nHeight, SWP_NOACTIVATE | SWP_NOZORDER | SWP_SHOWWINDOW);
         }
 
+        public static IntPtr FindTopmostWindow()
+        {
+            List<IntPtr> hwnds = GetAllWindowHandle();
+            if (hwnds.Count == 0)
+                return IntPtr.Zero;
 
+            int max = -1;
+            IntPtr result = IntPtr.Zero;
+            foreach (IntPtr hwnd in hwnds)
+            {
+                var z = GetWindowZOrder(hwnd);
+                if (z > max)
+                {
+                    max = z;
+                    result = hwnd;
+                }
+            }
+            return result;
+        }
 
+        
         /// <summary>
         /// Disable touch event and detect touching gestural input.
         /// </summary>
@@ -201,7 +218,7 @@ namespace BodySee
             }
         }
 
-        public static RECT GetWindowRect(IntPtr hwnd)
+        private static RECT GetWindowRect(IntPtr hwnd)
         {
             RECT rect = new RECT();
             GetWindowRect(hwnd, out rect);
@@ -233,15 +250,15 @@ namespace BodySee
         }
         #endregion
 
-        #region Helper Method
-        public static int GetWindowZOrder(IntPtr hWnd)
+        #region Private Methods
+        private static int GetWindowZOrder(IntPtr hWnd)
         {
             var zOrder = -1;
             while ((hWnd = GetWindow(hWnd, 2)) != IntPtr.Zero) zOrder++;
             return zOrder;
         }
 
-        public static string GetTitleOfForegroundWindow()
+        private static string GetTitleOfForegroundWindow()
         {
             const int nChars = 256;
             StringBuilder buff = new StringBuilder(nChars);
@@ -255,21 +272,16 @@ namespace BodySee
             return null;
         }
 
-        public static String GetTitleFromHandle(IntPtr hWnd)
+        private static String GetTitleFromHandle(IntPtr hWnd)
         {
-            const int nChars = 256;
-            StringBuilder Buff = new StringBuilder(nChars);
-            if (GetWindowText(hWnd, Buff, nChars) > 0)
-            {
+            StringBuilder Buff = new StringBuilder(256);
+            if (GetWindowText(hWnd, Buff, 256) > 0)
                 return Buff.ToString();
-            }
-
             return null;
         }
 
-
-
-        public static List<IntPtr> EnumerateWindow()
+     
+        private static List<IntPtr> EnumerateWindow()
         {
             var lShellWin = GetShellWindow();
             var currentProcessId = Process.GetCurrentProcess().Id;
@@ -349,32 +361,11 @@ namespace BodySee
                 return GetLastVisibleActivePopUpOfWindow(lastPopUp);
         }
 
-        public static IntPtr FindTopmostWindow()
-        {
-            List<IntPtr> hWnds = GetAllWindowHandle();
-            if(hWnds.Count == 0)
-            {
-                return IntPtr.Zero;
-            }
+        
 
-            int max = -1;
-            IntPtr result = IntPtr.Zero;
-            foreach(IntPtr hWnd in hWnds)
-            {
-                var z = GetWindowZOrder(hWnd);
-                if(z > max)
-                {
-                    max = z;
-                    result = hWnd;
-                }
-            }
-            return result;
-        }
-
-        public static List<IntPtr> GetAllWindowHandle()
+        private static List<IntPtr> GetAllWindowHandle()
         {
             Process[] processList = Process.GetProcesses();
-            int count = 0;
             List<IntPtr> list = new List<IntPtr>();
             foreach (Process p in processList)
             {

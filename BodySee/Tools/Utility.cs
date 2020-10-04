@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Ink;
 
-namespace BodySee
+namespace BodySee.Tools
 {
     class Utility
     {

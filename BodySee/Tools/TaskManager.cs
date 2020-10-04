@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using BodySee.Windows;
 
-namespace BodySee
+namespace BodySee.Tools
 {
     class TaskManager
     {
@@ -28,7 +29,7 @@ namespace BodySee
         public WhiteBoard whiteBoard;
         #endregion
 
-        #region Public Method
+        #region Gesture and Command Mapping
         public void Execute(String command)
         {
             command = command.Remove(command.Length - 1);
@@ -55,16 +56,16 @@ namespace BodySee
                         WinApiManager.TakeOverOperation();
                         break;
                     case "close":
-                        WinApiManager.CloseWindow();
+                        WinApiManager.CloseWindow(IntPtr.Zero);
                         break;
                     case "minimize":
-                        WinApiManager.MinimizeWindow();
+                        WinApiManager.MinimizeWindow(IntPtr.Zero);
                         break;
                     case "maximize":
-                        WinApiManager.MaximizeWindow();
+                        WinApiManager.MaximizeWindow(IntPtr.Zero);
                         break;
                     case "restore":
-                        WinApiManager.RestoreWindow();
+                        WinApiManager.RestoreWindow(IntPtr.Zero);
                         break;
                 }
             }));

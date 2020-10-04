@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Ink;
 
-namespace BodySee
+namespace BodySee.Tools
 {
     sealed class CommandStack
     {
@@ -57,7 +57,7 @@ namespace BodySee
         /// </summary>
         public void Undo()
         {
-            if (!CanUndo) throw new InvalidOperationException("No actions to undo");
+            if (!CanUndo) return;
 
             CommandItem item = _undoStack.Pop();
 
@@ -81,7 +81,7 @@ namespace BodySee
         /// </summary>
         public void Redo()
         {
-            if (!CanRedo) throw new InvalidOperationException();
+            if (!CanRedo) return;
 
             CommandItem item = _redoStack.Pop();
 

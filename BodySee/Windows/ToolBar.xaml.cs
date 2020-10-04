@@ -15,19 +15,13 @@ using System.Windows.Shapes;
 namespace BodySee.Windows
 {
     /// <summary>
-    /// BlockingWindow.xaml 的交互逻辑
+    /// ToolBar.xaml 的交互逻辑
     /// </summary>
-    public partial class BlockingWindow : Window
+    public partial class ToolBar : Window
     {
-        public BlockingWindow()
+        public ToolBar()
         {
             InitializeComponent();
-        }
-
-        private void BlockingButton_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyStates == Keyboard.GetKeyStates(Key.Q))
-                this.Close();
         }
     }
 }

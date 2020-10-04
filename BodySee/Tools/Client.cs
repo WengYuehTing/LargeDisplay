@@ -7,7 +7,7 @@ using System.Net.Sockets;
 using System.Diagnostics;
 using System.Threading;
 
-namespace BodySee
+namespace BodySee.Tools
 {
     class Client
     {

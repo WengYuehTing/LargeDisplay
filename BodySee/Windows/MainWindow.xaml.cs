@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BodySee.Tools;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -16,7 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace BodySee
+namespace BodySee.Windows
 {
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
@@ -24,28 +25,16 @@ namespace BodySee
     public partial class MainWindow : Window
     {
         #region Private Fields
-        private double width;
-        private double height;
-        private Size size;
+        private WhiteBoard _whiteBoard;  
         #endregion
 
         public MainWindow()
         {
             InitializeComponent();
-            this.Topmost = true;
-            resizeWindow();
+            this.Width = Utility.getScreenWidth() * Utility.wRATIO;
+            this.Height = Utility.getScreenHeight() * Utility.hRATIO;
             Client client = new Client();
             TaskManager.getInstance().mainWindow = this;
-            
-        }
-        
-        private void resizeWindow()
-        {
-            width = Utility.getScreenWidth() * Utility.wRATIO;
-            height = Utility.getScreenHeight() * Utility.hRATIO;
-            size = new Size(width, height);
-            this.Width = width;
-            this.Height = height;
         }
 
         public void moveWindow(double x)
@@ -63,45 +52,28 @@ namespace BodySee
         private void WhiteBoardIcon_TouchDown(object sender, TouchEventArgs e)
         {
             if (!Utility.IsWindowOpen<WhiteBoard>())
-                new WhiteBoard(this).Show();
+            {
+                _whiteBoard = new WhiteBoard(this);
+                _whiteBoard.Show();
+            }
             else
             {
-                foreach (Window win in Application.Current.Windows)
-                {
-                    if (win.Title == "WhiteBoard")
-                    {
-                        win.Close();
-                    }
-                }
+                _whiteBoard.Close();
+                _whiteBoard = null;
             }
         }
         
 
         private void Background_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyStates == Keyboard.GetKeyStates(Key.Z))
-            {
-                IntPtr hwnd = WinApiManager.FindWindowByCaption(IntPtr.Zero, "WhiteBoard");
-                if(hwnd != IntPtr.Zero)
-                {
-                    WinApiManager.SendMessage(hwnd, WinApiManager.WM_CLOSE, 0, IntPtr.Zero);
-                } 
-            }
-
             if (e.KeyStates == Keyboard.GetKeyStates(Key.Q))
-            {
                 WinApiManager.TakeOverOperation();
-            }
 
             if (e.KeyStates == Keyboard.GetKeyStates(Key.W))
-            {
-                WinApiManager.GetAllWindowHandle();
-            }
-
-            if (e.KeyStates == Keyboard.GetKeyStates(Key.E))
-            {
                 WinApiManager.HookTouchEvents(true);
-            }
+
+            //if (e.KeyStates == Keyboard.GetKeyStates(Key.E))
+            //    WinApiManager.GetAllWindowHandle();
         }
 
         private void Background_Loaded(object sender, RoutedEventArgs e)
