@@ -98,6 +98,7 @@ namespace BodySee
         public static UInt32 SC_LASTWINDOW = 0xF050;
         public static UInt32 SC_MOVE = 0xF010;
         public static UInt32 SC_SIZE = 0xF000;
+        private static int SWP_NOMOVE = 0x0002;
         private static int SWP_NOSIZE = 0x0001;
         private static int SWP_NOACTIVATE = 0x0010;
         private static int SWP_NOZORDER = 0x0004;
@@ -145,12 +146,10 @@ namespace BodySee
             //}
         }
 
-        public static void MoveWindow(int xOffset, int yOffset)
+        public static void MoveWindow(IntPtr hwnd, int xOffset, int yOffset)
         {
-            IntPtr hwnd = FindTopmostWindow();
             if (hwnd == IntPtr.Zero)
                 return;
-            Console.WriteLine("Move Window : {0}", GetTitleFromHandle(hwnd));
             RECT rect = GetWindowRect(hwnd);
             int width = Math.Abs(rect.Right - rect.Left);
             int height = Math.Abs(rect.Bottom - rect.Top);
@@ -159,14 +158,23 @@ namespace BodySee
             SetWindowPos(hwnd, IntPtr.Zero, x, y, 0, 0, SWP_NOSIZE | SWP_NOACTIVATE | SWP_NOZORDER | SWP_SHOWWINDOW);
         }
 
-        public static void ScaleWindow()
+        public static void ScaleWindow(IntPtr hwnd, double xRatio, double yRatio)
         {
-            //Console.WriteLine("Move Window");
-            //IntPtr hWnd = FindTopmostWindow();
-            //if (hWnd != IntPtr.Zero)
-            //{
-            //    SendMessage(hWnd, WM_SYSCOMMAND, SC_SIZE, 1);
-            //}
+            if (hwnd == IntPtr.Zero)
+                return;
+
+            RECT rect = GetWindowRect(hwnd);
+            int width = Math.Abs(rect.Right - rect.Left);
+            int height = Math.Abs(rect.Bottom - rect.Top);
+            int x = rect.Left;
+            int y = rect.Top;
+            int cx = x + width / 2;
+            int cy = y + height / 2;
+            int nWidth = (int)((double)width * xRatio);
+            int nHeight = (int)((double)height * yRatio);
+            int nx = cx - nWidth / 2;
+            int ny = cy - nHeight / 2;
+            SetWindowPos(hwnd, IntPtr.Zero, nx, ny, nWidth, nHeight, SWP_NOACTIVATE | SWP_NOZORDER | SWP_SHOWWINDOW);
         }
 
 
@@ -374,12 +382,12 @@ namespace BodySee
                 if (IsWindowValid(hWnd) && GetTitleFromHandle(hWnd) != "工具栏" && GetTitleFromHandle(hWnd) != "GestureWindow")
                 {
                     list.Add(hWnd);
-                    Debug.WriteLine("Title: {0} ZOrder: {1}", p.MainWindowTitle, GetWindowZOrder(p.MainWindowHandle));
+                    //Debug.WriteLine("Title: {0} ZOrder: {1}", p.MainWindowTitle, GetWindowZOrder(p.MainWindowHandle));
                     //Debug.WriteLine("Process: {0} ID: {1}, Window title: {2}", p.ProcessName, p.Id, p.MainWindowTitle);
                 }
             }
 
-            Console.WriteLine("Found {0} windows", list.Count);
+            //Console.WriteLine("Found {0} windows", list.Count);
             return list;
         }
     }

@@ -23,22 +23,17 @@ namespace BodySee
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        #region Private Fields
         private double width;
         private double height;
         private Size size;
-
-        private int count = 0;
-
-        private IntPtr targetHwnd;
-
+        #endregion
 
         public MainWindow()
         {
             InitializeComponent();
             this.Topmost = true;
             resizeWindow();
-            //CreateDebugTimer();
             Client client = new Client();
             TaskManager.getInstance().mainWindow = this;
             
@@ -68,10 +63,7 @@ namespace BodySee
         private void WhiteBoardIcon_TouchDown(object sender, TouchEventArgs e)
         {
             if (!Utility.IsWindowOpen<WhiteBoard>())
-            {
-                WhiteBoard wb = new WhiteBoard(this);
-                wb.Show();
-            }
+                new WhiteBoard(this).Show();
             else
             {
                 foreach (Window win in Application.Current.Windows)
@@ -108,11 +100,6 @@ namespace BodySee
 
             if (e.KeyStates == Keyboard.GetKeyStates(Key.E))
             {
-                WinApiManager.MoveWindow(150, 150);
-            }
-
-            if (e.KeyStates == Keyboard.GetKeyStates(Key.R))
-            {
                 WinApiManager.HookTouchEvents(true);
             }
         }
@@ -120,32 +107,6 @@ namespace BodySee
         private void Background_Loaded(object sender, RoutedEventArgs e)
         {
             background.Focus();
-        }
-
-
-        /* 以下是debug的timer用 */
-        private void CreateDebugTimer()
-        {
-            DispatcherTimer timer = new DispatcherTimer();
-            timer.Tick += new EventHandler(DebugTimerTask);
-            timer.Interval = new TimeSpan(0, 0, 1);
-            timer.Start();
-        }
-
-
-        private void DebugTimerTask(object sender, EventArgs e)
-        {
-            //Debug.WriteLine(WinApiManager.GetActiveWindowTitle());
-            string activeWinTitle = WinApiManager.GetTitleOfForegroundWindow();
-            count++;
-            if(count == 6)
-            {
-                //IntPtr hwnd = WinApiManager.FindWindowByCaption(IntPtr.Zero, activeWinTitle);
-                //if (hwnd != IntPtr.Zero)
-                //{
-                //    WinApiManager.SendMessage(hwnd, WinApiManager.WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
-                //}
-            }
         }
     }
 }
