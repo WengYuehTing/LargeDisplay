@@ -162,8 +162,8 @@ namespace BodySee.Windows
                 double translate_y = e.DeltaManipulation.Translation.Y * 2;
                 double scale_x = e.DeltaManipulation.Scale.X;
                 double scale_y = e.DeltaManipulation.Scale.Y;
-                //WinApiManager.MoveWindow(hwnd, (int)translate_x, (int)translate_y);
-                WinApiManager.ScaleWindow(_hwnd, scale_x, scale_y);
+                WinApiManager.MoveWindow(_hwnd, (int)translate_x, (int)translate_y);
+                //WinApiManager.ScaleWindow(_hwnd, scale_x, scale_y);
                 e.Handled = true;
             }
         }

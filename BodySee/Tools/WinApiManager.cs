@@ -258,20 +258,6 @@ namespace BodySee.Tools
             return zOrder;
         }
 
-        private static string GetTitleOfForegroundWindow()
-        {
-            const int nChars = 256;
-            StringBuilder buff = new StringBuilder(nChars);
-            IntPtr hwnd = GetForegroundWindow();
-
-            if (GetWindowText(hwnd, buff, nChars) > 0)
-            {
-                return buff.ToString();
-            }
-
-            return null;
-        }
-
         private static String GetTitleFromHandle(IntPtr hWnd)
         {
             StringBuilder Buff = new StringBuilder(256);

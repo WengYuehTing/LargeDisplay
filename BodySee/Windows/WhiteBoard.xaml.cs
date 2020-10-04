@@ -26,20 +26,61 @@ namespace BodySee.Windows
     public partial class WhiteBoard : Window
     {
         #region Private Fields
-        private CommandStack    _cmdStack;
-        private int             _editingOperationCount;
+        private CommandStack        _cmdStack;
+        private int                 _editingOperationCount;
         #endregion
 
+        #region Properties
+        private Color _InkColor;
+        public Color InkColor
+        {
+            get { return _InkColor; }
+            set
+            {
+                _InkColor = value;
+                canvas.DefaultDrawingAttributes.Color = _InkColor;
+            }
+        }
+
+        private Size _InkSize;
+        public Size InkSize
+        {
+            get { return _InkSize; }
+            set
+            {
+                _InkSize = value;
+                canvas.DefaultDrawingAttributes.Width = _InkSize.Width;
+                canvas.DefaultDrawingAttributes.Height = _InkSize.Height;
+            }
+        }
+
+        private EllipseStylusShape _EraserSize;
+        public EllipseStylusShape EraserSize
+        {
+            get { return _EraserSize; }
+            set
+            {
+                _EraserSize = value;
+                canvas.EraserShape = _EraserSize;
+            }
+        }
+        #endregion
+        
         public WhiteBoard(MainWindow main)
         {
             InitializeComponent();
-            TaskManager.getInstance().whiteBoard = this;
+            
             _cmdStack = new CommandStack(canvas.Strokes);
-            canvas.Strokes.StrokesChanged += Strokes_StrokesChanged;
             _editingOperationCount = 0;
+            InkColor = Colors.Black;
+            InkSize = new Size(canvas.DefaultDrawingAttributes.Width, canvas.DefaultDrawingAttributes.Height);
+            EraserSize = new EllipseStylusShape(50, 50);
+
+            canvas.Strokes.StrokesChanged += Strokes_StrokesChanged;
+            TaskManager.getInstance().whiteBoard = this;
         }
 
-        #region Public Interfaces
+        #region Public Methods
         /// <summary>
         /// 修改画笔颜色
         /// </summary>
@@ -47,7 +88,16 @@ namespace BodySee.Windows
         public void ChangeColor(Color color)
         {
             ExitEraserMode();
-            canvas.DefaultDrawingAttributes.Color = color;
+            InkColor = color;
+        }
+
+
+        /// <summary>
+        /// 改变画笔粗细
+        /// </summary>
+        public void ChangeInkSize(Size size)
+        {
+            InkSize = size;
         }
 
 
@@ -56,8 +106,16 @@ namespace BodySee.Windows
         /// </summary>
         public void EnterEraserMode()
         {
-            canvas.EraserShape = Utility.ERASER_SIZE;
             canvas.EditingMode = InkCanvasEditingMode.EraseByPoint;
+        }
+
+
+        /// <summary>
+        /// 调整橡皮擦粗细
+        /// </summary>
+        public void ChangeEraserSize(EllipseStylusShape shape)
+        {
+            EraserSize = shape;
         }
 
 
@@ -70,14 +128,7 @@ namespace BodySee.Windows
         }
 
 
-        /// <summary>
-        /// 改变画笔粗细
-        /// </summary>
-        public void ChangeInkSize(double s)
-        {
-            canvas.DefaultDrawingAttributes.Width = s;
-            canvas.DefaultDrawingAttributes.Height = s;
-        }
+        
 
         
         /// <summary>
@@ -141,7 +192,7 @@ namespace BodySee.Windows
         }
         #endregion
 
-        #region Private Methods
+        #region UI Event
         /// <summary>
         /// 监听stroke变化事件
         /// </summary>
@@ -156,7 +207,18 @@ namespace BodySee.Windows
             _cmdStack.Enqueue(item);
         }
 
+        /// <summary>
+        /// Increment operation count for undo/redo. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Canvas_TouchUp(object sender, TouchEventArgs e)
+        {
+            _editingOperationCount++;
+        }
+        #endregion
 
+        #region Debug
         /// <summary>
         /// 监听键盘输入 - Manually control by Wizard of Oz.
         /// </summary>
@@ -191,15 +253,7 @@ namespace BodySee.Windows
         }
         
 
-        /// <summary>
-        /// Increment operation count for undo/redo. 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Canvas_TouchUp(object sender, TouchEventArgs e)
-        {
-            _editingOperationCount++;
-        }
+        
         #endregion
     }
 }
