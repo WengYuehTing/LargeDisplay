@@ -5,13 +5,6 @@ VisualStudioVersion = 15.0.28307.1259
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BodySee", "BodySee\BodySee.csproj", "{74E5BC3F-61A2-4DE2-B831-323550AFB80D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{22EE4E4B-7732-4DF8-B1D9-C2D8B3DCBAD9}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\Desktop\GoToWindow-master\.nuget\NuGet.Config = ..\..\Desktop\GoToWindow-master\.nuget\NuGet.Config
-		..\..\Desktop\GoToWindow-master\.nuget\NuGet.exe = ..\..\Desktop\GoToWindow-master\.nuget\NuGet.exe
-		..\..\Desktop\GoToWindow-master\.nuget\NuGet.targets = ..\..\Desktop\GoToWindow-master\.nuget\NuGet.targets
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
