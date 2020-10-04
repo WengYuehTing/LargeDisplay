@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="工具栏" Height="100" Width="200">
     <Grid x:Name="background" KeyDown="Background_KeyDown" Focusable="True" Loaded="Background_Loaded">
-        <Image x:Name="WhiteBoardIcon" Source="whiteboard.jpg" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="100" TouchDown="WhiteBoardIcon_TouchDown"/>
+        <Image x:Name="WhiteBoardIcon" Source="../Images/whiteboard.jpg" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="100" TouchDown="WhiteBoardIcon_TouchDown"/>
 
     </Grid>
 </Window>

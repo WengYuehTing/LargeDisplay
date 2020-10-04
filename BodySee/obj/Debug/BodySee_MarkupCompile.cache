@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\App.xaml
-4-273397148
+4-219963220
 
-141511826237
+141181299804
 131569487696
-BlockingWindow.xaml;GestureWindow.xaml;MainWindow.xaml;WhiteBoard.xaml;
+Windows\BlockingWindow.xaml;Windows\GestureWindow.xaml;Windows\MainWindow.xaml;Windows\WhiteBoard.xaml;
 
 False
 
