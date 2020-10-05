@@ -42,7 +42,7 @@ namespace BodySee.Windows
         private const int LONG_PRESS_DURATION = 500;
 
         //长按时对于手抖的容忍度
-        private const int LONG_PRESS_LIMITED_PIXELS = 20;
+        private const int LONG_PRESS_LIMITED = 20;
         #endregion
 
         public GestureWindow()
@@ -68,7 +68,7 @@ namespace BodySee.Windows
             longPressTimer.Start();
 
             // 找到目标窗口
-            _hwnd = WinApiManager.FindTopmostWindow();
+            _hwnd = WindowsHandler.FindTopmostWindow();
 
             // 初始化起始点
             int id = e.TouchDevice.Id;
@@ -87,13 +87,13 @@ namespace BodySee.Windows
             if (finger1.ContainsKey(id))
             {
                 finger1[id].Add(position);
-                if (longPressTimer.IsEnabled && Point.Subtract(position, finger1[id][0]).Length > LONG_PRESS_LIMITED_PIXELS)
+                if (longPressTimer.IsEnabled && Point.Subtract(position, finger1[id][0]).Length > LONG_PRESS_LIMITED)
                     longPressTimer.Stop();
             }
             else if (finger2.ContainsKey(id))
             {
                 finger2[id].Add(position);
-                if (longPressTimer.IsEnabled && Point.Subtract(position, finger2[id][0]).Length > LONG_PRESS_LIMITED_PIXELS)
+                if (longPressTimer.IsEnabled && Point.Subtract(position, finger2[id][0]).Length > LONG_PRESS_LIMITED)
                     longPressTimer.Stop();
             }
 
@@ -116,22 +116,22 @@ namespace BodySee.Windows
                 if(list1[n1 - 1].Y - list1[0].Y > SWIPE_THRESHOLD && list2[n2 - 1].Y - list2[0].Y > SWIPE_THRESHOLD && Math.Abs(list1[n1 - 1].X - list1[0].X) < SWIPE_LIMITED && Math.Abs(list2[n2 - 1].X - list2[0].X) < SWIPE_LIMITED)
                 {
                     Console.WriteLine("双指下滑");
-                    WinApiManager.MinimizeWindow(_hwnd);
+                    WindowsHandler.MinimizeWindow(_hwnd);
                 }
                 else if (list1[0].Y - list1[n1 - 1].Y > SWIPE_THRESHOLD && list2[0].Y - list2[n2 - 1].Y > SWIPE_THRESHOLD && Math.Abs(list1[n1 - 1].X - list1[0].X) < SWIPE_LIMITED && Math.Abs(list2[n2 - 1].X - list2[0].X) < SWIPE_LIMITED)
                 {
                     Console.WriteLine("双指上滑");
-                    WinApiManager.MaximizeWindow(_hwnd);
+                    WindowsHandler.MaximizeWindow(_hwnd);
                 }
                 else if (list1[n1 - 1].X - list1[0].X > SWIPE_THRESHOLD && list2[n2 - 1].X - list2[0].X > SWIPE_THRESHOLD && Math.Abs(list1[n1 - 1].Y - list1[0].Y) < SWIPE_LIMITED && Math.Abs(list2[n2 - 1].Y - list2[0].Y) < SWIPE_LIMITED)
                 {
                     Console.WriteLine("双指右滑");
-                    WinApiManager.RestoreWindow(_hwnd);
+                    WindowsHandler.RestoreWindow(_hwnd);
                 }
                 else if (list1[0].X - list1[n1 - 1].X > SWIPE_THRESHOLD && list2[0].X - list2[n2 - 1].X > SWIPE_THRESHOLD && Math.Abs(list1[n1 - 1].Y - list1[0].Y) < SWIPE_LIMITED && Math.Abs(list2[n2 - 1].Y - list2[0].Y) < SWIPE_LIMITED)
                 {
                     Console.WriteLine("双指左滑");
-                    WinApiManager.CloseWindow(_hwnd);
+                    WindowsHandler.CloseWindow(_hwnd);
                 }
             }
 
@@ -162,8 +162,8 @@ namespace BodySee.Windows
                 double translate_y = e.DeltaManipulation.Translation.Y * 2;
                 double scale_x = e.DeltaManipulation.Scale.X;
                 double scale_y = e.DeltaManipulation.Scale.Y;
-                WinApiManager.MoveWindow(_hwnd, (int)translate_x, (int)translate_y);
-                //WinApiManager.ScaleWindow(_hwnd, scale_x, scale_y);
+                WindowsHandler.MoveWindow(_hwnd, (int)translate_x, (int)translate_y);
+                //WindowsHandler.ScaleWindow(_hwnd, scale_x, scale_y);
                 e.Handled = true;
             }
         }

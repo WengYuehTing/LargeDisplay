@@ -31,8 +31,8 @@ namespace BodySee.Windows
         public MainWindow()
         {
             InitializeComponent();
-            this.Width = Utility.getScreenWidth() * Utility.wRATIO;
-            this.Height = Utility.getScreenHeight() * Utility.hRATIO;
+            this.Width = WindowsHandler.GetScreenWidth() * WindowsHandler.WRATIO;
+            this.Height = WindowsHandler.GetScreenHeight() * WindowsHandler.HRATIO;
             Client client = new Client();
             TaskManager.getInstance().mainWindow = this;
         }
@@ -67,13 +67,10 @@ namespace BodySee.Windows
         private void Background_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyStates == Keyboard.GetKeyStates(Key.Q))
-                WinApiManager.TakeOverOperation();
+                WindowsHandler.AcquirePriortyofScreenTouch();
 
             if (e.KeyStates == Keyboard.GetKeyStates(Key.W))
-                WinApiManager.HookTouchEvents(true);
-
-            //if (e.KeyStates == Keyboard.GetKeyStates(Key.E))
-            //    WinApiManager.GetAllWindowHandle();
+                WindowsHandler.BlockingScreenTouch();
         }
 
         private void Background_Loaded(object sender, RoutedEventArgs e)

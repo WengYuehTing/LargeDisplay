@@ -53,19 +53,19 @@ namespace BodySee.Tools
                         whiteBoard.Clear();
                         break;
                     case "two_fingers":
-                        WinApiManager.TakeOverOperation();
+                        WindowsHandler.AcquirePriortyofScreenTouch();
                         break;
                     case "close":
-                        WinApiManager.CloseWindow(IntPtr.Zero);
+                        WindowsHandler.CloseWindow(WindowsHandler.FindTopmostWindow());
                         break;
                     case "minimize":
-                        WinApiManager.MinimizeWindow(IntPtr.Zero);
+                        WindowsHandler.MinimizeWindow(WindowsHandler.FindTopmostWindow());
                         break;
                     case "maximize":
-                        WinApiManager.MaximizeWindow(IntPtr.Zero);
+                        WindowsHandler.MaximizeWindow(WindowsHandler.FindTopmostWindow());
                         break;
                     case "restore":
-                        WinApiManager.RestoreWindow(IntPtr.Zero);
+                        WindowsHandler.RestoreWindow(WindowsHandler.FindTopmostWindow());
                         break;
                 }
             }));

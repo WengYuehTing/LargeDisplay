@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,28 +20,84 @@ namespace BodySee.Tools
         // Definition of screen touch mode.
         public static ScreenTouchMode ScreenTouchMode = ScreenTouchMode.Normal;
 
+        #region Window Controls
+        public static void CloseWindow(IntPtr hwnd)
+        {
+            if (hwnd != IntPtr.Zero)
+            {
+                Console.WriteLine("Close Window:" + GetWindowTitle(hwnd));
+                WinApiManager.SendMessage(hwnd, WinApiManager.WM_CLOSE, 0, IntPtr.Zero);
+            }
+        }
 
-        #region Methods Relate to Screen Touch 
+        public static void MinimizeWindow(IntPtr hwnd)
+        {
+            if (hwnd != IntPtr.Zero)
+            {
+                Console.WriteLine("Minimize Window: " + GetWindowTitle(hwnd));
+                WinApiManager.SendMessage(hwnd, WinApiManager.WM_SYSCOMMAND, WinApiManager.SC_MINIMIZE, IntPtr.Zero);
+            }
+        }
+
+        public static void MaximizeWindow(IntPtr hwnd)
+        {
+            if (hwnd != IntPtr.Zero)
+            {
+                Console.WriteLine("Maximize Window: " + GetWindowTitle(hwnd));
+                WinApiManager.SendMessage(hwnd, WinApiManager.WM_SYSCOMMAND, WinApiManager.SC_MAXIMIZE, IntPtr.Zero);
+            }
+        }
+
+        public static void RestoreWindow(IntPtr hwnd)
+        {
+            if (hwnd != IntPtr.Zero)
+            {
+                Console.WriteLine("Restore Window: " + GetWindowTitle(hwnd));
+                WinApiManager.SendMessage(hwnd, WinApiManager.WM_SYSCOMMAND, WinApiManager.SC_RESTORE, IntPtr.Zero);
+            }
+        }
+
+        public static void MoveWindow(IntPtr hwnd, int xOffset, int yOffset)
+        {
+            if (hwnd != IntPtr.Zero)
+            {
+                WinApiManager.RECT rect = new WinApiManager.RECT();
+                WinApiManager.GetWindowRect(hwnd, out rect);
+                int width = Math.Abs(rect.Right - rect.Left);
+                int height = Math.Abs(rect.Bottom - rect.Top);
+                int x = Math.Max(0 - width / 2, Math.Min((int)Utility.getScreenWidth() + width / 2, rect.Left + xOffset));
+                int y = Math.Max(0, Math.Min((int)Utility.getScreenHeight(), rect.Top + yOffset));
+                WinApiManager.SetWindowPos(hwnd, IntPtr.Zero, x, y, 0, 0, WinApiManager.SWP_NOSIZE | WinApiManager.SWP_NOACTIVATE | WinApiManager.SWP_NOZORDER | WinApiManager.SWP_SHOWWINDOW);
+            }
+        }
+
+        public static void ScaleWindow(IntPtr hwnd, double xRatio, double yRatio)
+        {
+            if (hwnd != IntPtr.Zero)
+            {
+                WinApiManager.RECT rect = new WinApiManager.RECT();
+                WinApiManager.GetWindowRect(hwnd, out rect);
+                int width = Math.Abs(rect.Right - rect.Left);
+                int height = Math.Abs(rect.Bottom - rect.Top);
+                int x = rect.Left;
+                int y = rect.Top;
+                int cx = x + width / 2;
+                int cy = y + height / 2;
+                int nWidth = (int)((double)width * xRatio);
+                int nHeight = (int)((double)height * yRatio);
+                int nx = cx - nWidth / 2;
+                int ny = cy - nHeight / 2;
+                WinApiManager.SetWindowPos(hwnd, IntPtr.Zero, nx, ny, nWidth, nHeight, WinApiManager.SWP_NOACTIVATE | WinApiManager.SWP_NOZORDER | WinApiManager.SWP_SHOWWINDOW);
+            }
+        }
+        #endregion
+
+
+        #region Enabled/Disable Screen Touch 
         /// <summary>
         /// Trigger while a user faces to screen. 
         /// </summary>
-        public static void FaceToScreen()
-        {
-            ScreenTouchMode = ScreenTouchMode.Normal;
-            if (IsWindowOpen<BlockingWindow>())
-            {
-                foreach (Window window in Application.Current.Windows)
-                {
-                    if (window.Title == "BlockingWindow" || window.Title == "GestureWindow")
-                    {
-                        window.Close();
-                    }
-                }
-            }
-
-        }
-
-        public static void BackOnToScreen()
+        public static void BlockingScreenTouch()
         {
             ScreenTouchMode = ScreenTouchMode.Blocking;
 
@@ -51,7 +108,7 @@ namespace BodySee.Tools
             }
         }
 
-        public static void TwoFingersApporaching()
+        public static void AcquirePriortyofScreenTouch()
         {
             ScreenTouchMode = ScreenTouchMode.BlockingAndGesture;
 
@@ -62,38 +119,131 @@ namespace BodySee.Tools
             }
         }
 
-        public static void TwoFingersRelease()
+        public static void RecoverScreenTouch()
         {
             ScreenTouchMode = ScreenTouchMode.Normal;
-            if(IsWindowOpen<GestureWindow>())
+            if (IsWindowOpen<BlockingWindow>() || IsWindowOpen<GestureWindow>())
             {
-                foreach(Window window in Application.Current.Windows)
+                foreach (Window window in Application.Current.Windows)
                 {
-                    if(window.Title == "GestureWindow")
+                    if (window.Title == "BlockingWindow" || window.Title == "GestureWindow")
                     {
                         window.Close();
-                        return;
                     }
                 }
             }
         }
         #endregion
 
-        public static double getScreenWidth()
+        #region Find Active/Topmost Windows
+        public static IntPtr FindTopmostWindow()
         {
-            return SystemParameters.PrimaryScreenWidth;
+            List<IntPtr> hwnds = GetAllWindowHandle();
+            if (hwnds.Count != 0)
+            {
+                int max = -1;
+                IntPtr result = IntPtr.Zero;
+                foreach (IntPtr hwnd in hwnds)
+                {
+                    var z = GetWindowZOrder(hwnd);
+                    if (z > max)
+                    {
+                        max = z;
+                        result = hwnd;
+                    }
+                }
+                return result;
+            }
+
+            return IntPtr.Zero;
         }
 
-        public static double getScreenHeight()
+
+        private static bool IsWindowInterested(IntPtr window)
         {
-            return SystemParameters.PrimaryScreenHeight;
+            if (window == WinApiManager.GetShellWindow())
+                return false;
+
+            IntPtr root = WinApiManager.GetAncestor(window, WinApiManager.GetAncestorFlags.GetRootOwner);
+
+            if (GetLastVisibleActivePopUpOfWindow(root) != window)
+                return false;
+
+            if (GetWindowTitle(window) == null)
+                return false;
+
+            if (!WinApiManager.IsWindowVisible(window))
+                return false;
+
+            var classNameStringBuilder = new StringBuilder(256);
+            var length = WinApiManager.GetClassName(window, classNameStringBuilder, classNameStringBuilder.Capacity);
+            if (length == 0)
+                return false;
+
+            string[] classNameToSkip =
+            {
+                "Shell_TrayWnd",
+                "DV2ControlHost",
+                "MsgrIMEWindowClass",
+                "SysShadow",
+                "Button"
+            };
+
+            var className = classNameStringBuilder.ToString();
+            if (Array.IndexOf(classNameToSkip, className) > -1)
+                return false;
+
+            if (className.StartsWith("WMP9MediaBarFlyout"))
+                return false;
+
+            return true;
         }
 
-        public static Size getScreenSize()
+        private static IntPtr GetLastVisibleActivePopUpOfWindow(IntPtr window)
         {
-            var width = System.Windows.SystemParameters.PrimaryScreenWidth;
-            var height = System.Windows.SystemParameters.PrimaryScreenHeight;
-            return new Size(width, height);
+            IntPtr lastPopUp = WinApiManager.GetLastActivePopup(window);
+            if (WinApiManager.IsWindowVisible(lastPopUp))
+                return lastPopUp;
+            else if (lastPopUp == window)
+                return IntPtr.Zero;
+            else
+                return GetLastVisibleActivePopUpOfWindow(lastPopUp);
+        }
+
+        public static List<IntPtr> GetAllWindowHandle()
+        {
+            Process[] processList = Process.GetProcesses();
+            List<IntPtr> list = new List<IntPtr>();
+            foreach (Process p in processList)
+            {
+                IntPtr hWnd = p.MainWindowHandle;
+                if (IsWindowInterested(hWnd) && GetWindowTitle(hWnd) != "工具栏" && GetWindowTitle(hWnd) != "GestureWindow")
+                {
+                    list.Add(hWnd);
+                    //Debug.WriteLine("Title: {0} ZOrder: {1}", p.MainWindowTitle, GetWindowZOrder(p.MainWindowHandle));
+                    //Debug.WriteLine("Process: {0} ID: {1}, Window title: {2}", p.ProcessName, p.Id, p.MainWindowTitle);
+                }
+            }
+
+            //Console.WriteLine("Found {0} windows", list.Count);
+            return list;
+        }
+        #endregion
+
+        #region Get Window Parameter
+        private static String GetWindowTitle(IntPtr hWnd)
+        {
+            StringBuilder Buff = new StringBuilder(256);
+            if (WinApiManager.GetWindowText(hWnd, Buff, 256) > 0)
+                return Buff.ToString();
+            return null;
+        }
+
+        private static int GetWindowZOrder(IntPtr hWnd)
+        {
+            var zOrder = -1;
+            while ((hWnd = WinApiManager.GetWindow(hWnd, 2)) != IntPtr.Zero) zOrder++;
+            return zOrder;
         }
 
         public static bool IsWindowOpen<T>(string name = "") where T : Window
@@ -102,5 +252,24 @@ namespace BodySee.Tools
                 ? Application.Current.Windows.OfType<T>().Any()
                 : Application.Current.Windows.OfType<T>().Any(w => w.Name.Equals(name));
         }
+        #endregion
+
+        #region Screen Parameters
+        public static double GetScreenWidth()
+        {
+            return SystemParameters.PrimaryScreenWidth;
+        }
+
+        public static double GetScreenHeight()
+        {
+            return SystemParameters.PrimaryScreenHeight;
+        }
+
+        public static Size GetScreenSize()
+        {
+            return new Size(System.Windows.SystemParameters.PrimaryScreenWidth, System.Windows.SystemParameters.PrimaryScreenHeight);
+        }
+
+        #endregion 
     }
 }
