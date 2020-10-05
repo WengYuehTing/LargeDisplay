@@ -25,7 +25,6 @@ namespace BodySee.Tools
         #endregion
 
         #region Window References
-        public MainWindow mainWindow;
         public WhiteBoard whiteBoard;
         public Menu menu;
 

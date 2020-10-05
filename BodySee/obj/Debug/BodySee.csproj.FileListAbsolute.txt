@@ -13,11 +13,9 @@ C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Debug\BodySee.exe
 C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Debug\BodySee.pdb
 C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Debug\Windows\BlockingWindow.g.cs
 C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Debug\Windows\GestureWindow.g.cs
-C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Debug\Windows\MainWindow.g.cs
 C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Debug\Windows\WhiteBoard.g.cs
 C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Debug\Windows\BlockingWindow.baml
 C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Debug\Windows\GestureWindow.baml
-C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Debug\Windows\MainWindow.baml
 C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Debug\Windows\WhiteBoard.baml
 C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Debug\Windows\Menu.g.cs
 C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Debug\Windows\Menu.baml
