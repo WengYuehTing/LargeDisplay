@@ -1,0 +1,14 @@
+﻿<Window x:Class="BodySee.Windows.Menu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BodySee.Windows"
+        mc:Ignorable="d"
+        Topmost="True"
+        Title="Menu" Height="100" Width="200">
+    <Grid x:Name="background" KeyDown="Background_KeyDown" Focusable="True" Loaded="Background_Loaded">
+        <Image x:Name="WhiteBoardIcon" Source="../Images/whiteboard.jpg" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="100" TouchDown="WhiteBoardIcon_TouchDown"/>
+
+    </Grid>
+</Window>

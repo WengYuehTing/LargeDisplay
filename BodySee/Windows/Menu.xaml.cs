@@ -1,9 +1,6 @@
-﻿using BodySee.Tools;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,41 +10,40 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Windows.Threading;
+using BodySee.Tools;
 
 namespace BodySee.Windows
 {
     /// <summary>
-    /// MainWindow.xaml 的交互逻辑
+    /// Menu.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Menu : Window
     {
         #region Private Fields
-        private WhiteBoard _whiteBoard;  
+        private WhiteBoard _whiteBoard;
         #endregion
 
-        public MainWindow()
+        public Menu()
         {
             InitializeComponent();
             this.Width = WindowsHandler.GetScreenWidth() * WindowsHandler.WRATIO;
             this.Height = WindowsHandler.GetScreenHeight() * WindowsHandler.HRATIO;
             Client client = new Client();
-            TaskManager.getInstance().mainWindow = this;
+            TaskManager.getInstance().menu = this;
         }
 
         public void moveWindow(double x)
         {
             this.Left += x;
         }
-        
+
         public void moveWindow(double x, double y)
         {
             this.Left += x;
             this.Top += y;
         }
-        
+
 
         private void WhiteBoardIcon_TouchDown(object sender, TouchEventArgs e)
         {
@@ -62,7 +58,7 @@ namespace BodySee.Windows
                 _whiteBoard = null;
             }
         }
-        
+
 
         private void Background_KeyDown(object sender, KeyEventArgs e)
         {

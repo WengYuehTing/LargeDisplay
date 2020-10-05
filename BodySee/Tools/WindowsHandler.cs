@@ -217,7 +217,7 @@ namespace BodySee.Tools
             foreach (Process p in processList)
             {
                 IntPtr hWnd = p.MainWindowHandle;
-                if (IsWindowInterested(hWnd) && GetWindowTitle(hWnd) != "工具栏" && GetWindowTitle(hWnd) != "GestureWindow")
+                if (IsWindowInterested(hWnd) && GetWindowTitle(hWnd) != "Menu" && GetWindowTitle(hWnd) != "GestureWindow")
                 {
                     list.Add(hWnd);
                     //Debug.WriteLine("Title: {0} ZOrder: {1}", p.MainWindowTitle, GetWindowZOrder(p.MainWindowHandle));

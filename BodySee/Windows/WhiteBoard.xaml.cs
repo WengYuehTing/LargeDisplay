@@ -66,7 +66,7 @@ namespace BodySee.Windows
         }
         #endregion
         
-        public WhiteBoard(MainWindow main)
+        public WhiteBoard()
         {
             InitializeComponent();
             
