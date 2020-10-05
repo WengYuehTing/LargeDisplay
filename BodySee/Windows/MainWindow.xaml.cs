@@ -51,7 +51,7 @@ namespace BodySee.Windows
 
         private void WhiteBoardIcon_TouchDown(object sender, TouchEventArgs e)
         {
-            if (!Utility.IsWindowOpen<WhiteBoard>())
+            if (!WindowsHandler.IsWindowOpen<WhiteBoard>())
             {
                 _whiteBoard = new WhiteBoard(this);
                 _whiteBoard.Show();

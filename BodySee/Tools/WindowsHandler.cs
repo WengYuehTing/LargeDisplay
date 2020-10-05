@@ -65,8 +65,8 @@ namespace BodySee.Tools
                 WinApiManager.GetWindowRect(hwnd, out rect);
                 int width = Math.Abs(rect.Right - rect.Left);
                 int height = Math.Abs(rect.Bottom - rect.Top);
-                int x = Math.Max(0 - width / 2, Math.Min((int)Utility.getScreenWidth() + width / 2, rect.Left + xOffset));
-                int y = Math.Max(0, Math.Min((int)Utility.getScreenHeight(), rect.Top + yOffset));
+                int x = Math.Max(0 - width / 2, Math.Min((int)WindowsHandler.GetScreenWidth() + width / 2, rect.Left + xOffset));
+                int y = Math.Max(0, Math.Min((int)WindowsHandler.GetScreenHeight(), rect.Top + yOffset));
                 WinApiManager.SetWindowPos(hwnd, IntPtr.Zero, x, y, 0, 0, WinApiManager.SWP_NOSIZE | WinApiManager.SWP_NOACTIVATE | WinApiManager.SWP_NOZORDER | WinApiManager.SWP_SHOWWINDOW);
             }
         }
