@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BodySee.Tools;
+using System.Windows.Media.Imaging;
 
 namespace BodySee.Windows
 {
@@ -44,6 +45,20 @@ namespace BodySee.Windows
             this.Top += y;
         }
 
+        public void ScreenShot()
+        {
+            double left = SystemParameters.VirtualScreenLeft;
+            double top = SystemParameters.VirtualScreenTop;
+            double width = SystemParameters.VirtualScreenWidth;
+            double height = SystemParameters.VirtualScreenHeight;
+
+            using (BitmapFrame bmp = new BitmapFrame((int)width, (int)height))
+            {
+
+            }
+
+        }
+
 
         private void WhiteBoardIcon_TouchDown(object sender, TouchEventArgs e)
         {
@@ -60,6 +75,9 @@ namespace BodySee.Windows
         }
 
 
+        
+
+
         private void Background_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyStates == Keyboard.GetKeyStates(Key.Q))
@@ -67,6 +85,9 @@ namespace BodySee.Windows
 
             if (e.KeyStates == Keyboard.GetKeyStates(Key.W))
                 WindowsHandler.BlockingScreenTouch();
+
+            if (e.KeyStates == Keyboard.GetKeyStates(Key.E))
+                ScreenShot();
         }
 
         private void Background_Loaded(object sender, RoutedEventArgs e)
