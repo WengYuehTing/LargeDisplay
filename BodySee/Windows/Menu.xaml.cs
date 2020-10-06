@@ -12,7 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BodySee.Tools;
-using System.Windows.Media.Imaging;
+using System.Drawing;
+using Microsoft.Win32;
+using System.IO;
 
 namespace BodySee.Windows
 {
@@ -49,14 +51,23 @@ namespace BodySee.Windows
         {
             double left = SystemParameters.VirtualScreenLeft;
             double top = SystemParameters.VirtualScreenTop;
-            double width = SystemParameters.VirtualScreenWidth;
-            double height = SystemParameters.VirtualScreenHeight;
-
-            using (BitmapFrame bmp = new BitmapFrame((int)width, (int)height))
+            double width = SystemParameters.VirtualScreenWidth*2;
+            double height = SystemParameters.VirtualScreenHeight*2;
+            
+            SaveFileDialog f = new SaveFileDialog();
+            f.FileName = "screenshot" + DateTime.Now.ToString("yyyyMMddhhmmss");
+            f.DefaultExt = ".jpg";
+            f.Filter = "Image (.jpg .png) | *.jpg *.png";
+            if(f.ShowDialog() == true)
             {
-
+                Task.Delay(500).ContinueWith(_ =>
+                {
+                    Bitmap bmp = new Bitmap((int)width, (int)height);
+                    Graphics g = Graphics.FromImage(bmp);
+                    g.CopyFromScreen((int)left, (int)top, 0, 0, bmp.Size);
+                    bmp.Save(f.FileName);
+                });
             }
-
         }
 
 

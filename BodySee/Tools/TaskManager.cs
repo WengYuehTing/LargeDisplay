@@ -72,6 +72,12 @@ namespace BodySee.Tools
                     case "two_fingers":
                         WindowsHandler.AcquirePriortyofScreenTouch();
                         break;
+                    case "back":
+                        WindowsHandler.BlockingScreenTouch();
+                        break;
+                    case "face":
+                        WindowsHandler.RecoverScreenTouch();
+                        break;
                     case "close":
                         WindowsHandler.CloseWindow(WindowsHandler.FindTopmostWindow());
                         break;

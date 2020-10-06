@@ -19,3 +19,5 @@ C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Debug\Windows\GestureWind
 C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Debug\Windows\WhiteBoard.baml
 C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Debug\Windows\Menu.g.cs
 C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Debug\Windows\Menu.baml
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\bin\Debug\System.Drawing.Common.dll
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Debug\BodySee.csproj.CopyComplete
