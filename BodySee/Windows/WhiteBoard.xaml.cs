@@ -20,6 +20,26 @@ using BodySee.Tools;
 
 namespace BodySee.Windows
 {
+    public class CustomBrush
+    {
+        public Color Color { get; set; }
+        public double Width { get; set; }
+        public double Height { get; set; }
+
+        public CustomBrush(Color _color, double _width, double _height)
+        {
+            Color = _color;
+            Width = _width;
+            Height = _height;
+        }
+    }
+
+    public enum ESupportedBrush
+    {
+        Normal,
+        Highlight
+    }
+
     /// <summary>
     /// WhiteBoard.xaml 的交互逻辑
     /// </summary>
@@ -30,51 +50,82 @@ namespace BodySee.Windows
         private int                 _editingOperationCount;
         #endregion
 
+        #region Private Constant
+        private Color DEFAULT_NORMAL_COLOR = Colors.Black;
+        private double DEFAULT_NORMAL_WIDTH = 2.0f;
+        private double DEFAULT_NORMAL_HEIGHT = 2.0f;
+        private Color DEFAULT_HIGHTLIGHT_COLOR = Colors.Black;
+        private double DEFAULT_HIGHLIGHT_WIDTH = 2.0f;
+        private double DEFAULT_HIGHLIGHT_HEIGHT = 20.0f;
+        #endregion
+
         #region Properties
-        private Color _InkColor;
-        public Color InkColor
+        private CustomBrush _NormalBrush;
+        public CustomBrush NormalBrush
         {
-            get { return _InkColor; }
+            get { return _NormalBrush; }
+            set { _NormalBrush = value; }
+
+        }
+
+
+        private CustomBrush _HighlightBrush;
+        public CustomBrush HighlightBrush
+        {
+            get { return _HighlightBrush; }
+            set { _HighlightBrush = value; }
+        }
+
+
+        private ESupportedBrush _BrushMode;
+        public ESupportedBrush BrushMode
+        {
+            get { return _BrushMode; }
             set
             {
-                _InkColor = value;
-                canvas.DefaultDrawingAttributes.Color = _InkColor;
+                _BrushMode = value;
+                ExitEraserMode();
+                if (_BrushMode == ESupportedBrush.Normal)
+                {
+                    canvas.DefaultDrawingAttributes.Color = NormalBrush.Color;
+                    canvas.DefaultDrawingAttributes.Width = NormalBrush.Width;
+                    canvas.DefaultDrawingAttributes.Height = NormalBrush.Height;
+                }
+                else
+                {
+                    canvas.DefaultDrawingAttributes.Color = HighlightBrush.Color;
+                    canvas.DefaultDrawingAttributes.Width = HighlightBrush.Width;
+                    canvas.DefaultDrawingAttributes.Height = HighlightBrush.Height;
+                }
             }
         }
 
-        private Size _InkSize;
-        public Size InkSize
+        private EllipseStylusShape _FingerEraserSize;
+        public EllipseStylusShape FingerEraserSize
         {
-            get { return _InkSize; }
-            set
-            {
-                _InkSize = value;
-                canvas.DefaultDrawingAttributes.Width = _InkSize.Width;
-                canvas.DefaultDrawingAttributes.Height = _InkSize.Height;
-            }
+            get { return _FingerEraserSize; }
+            set { _FingerEraserSize = value; }
         }
 
-        private EllipseStylusShape _EraserSize;
-        public EllipseStylusShape EraserSize
+        private EllipseStylusShape _PalmEraserSize;
+        public EllipseStylusShape PalmEraserSize
         {
-            get { return _EraserSize; }
-            set
-            {
-                _EraserSize = value;
-                canvas.EraserShape = _EraserSize;
-            }
+            get { return _PalmEraserSize; }
+            set { _PalmEraserSize = value; }
         }
         #endregion
-        
+
         public WhiteBoard()
         {
             InitializeComponent();
             
             _cmdStack = new CommandStack(canvas.Strokes);
             _editingOperationCount = 0;
-            InkColor = Colors.Black;
-            InkSize = new Size(canvas.DefaultDrawingAttributes.Width, canvas.DefaultDrawingAttributes.Height);
-            EraserSize = new EllipseStylusShape(50, 50);
+            NormalBrush = new CustomBrush(DEFAULT_NORMAL_COLOR, DEFAULT_NORMAL_WIDTH, DEFAULT_NORMAL_HEIGHT);
+            HighlightBrush = new CustomBrush(DEFAULT_HIGHTLIGHT_COLOR, DEFAULT_HIGHLIGHT_WIDTH, DEFAULT_HIGHLIGHT_HEIGHT);
+            FingerEraserSize = new EllipseStylusShape(50, 50);
+            PalmEraserSize = new EllipseStylusShape(500, 500);
+            BrushMode = ESupportedBrush.Normal;
 
             canvas.Strokes.StrokesChanged += Strokes_StrokesChanged;
             TaskManager.getInstance().whiteBoard = this;
@@ -82,40 +133,85 @@ namespace BodySee.Windows
 
         #region Public Methods
         /// <summary>
-        /// 修改画笔颜色
+        /// 启用正常笔刷模式
         /// </summary>
-        /// <param name="color"> 修改成指定的颜色</param>
-        public void ChangeColor(Color color)
+        public void EnterNormalBrushMode()
         {
-            ExitEraserMode();
-            InkColor = color;
+            BrushMode = ESupportedBrush.Normal;
+        }
+
+
+        public void ChangeNormalBrushColor(Color color)
+        {
+            NormalBrush.Color = color;
+        }
+
+        public void ChangeNormalBrushWidth(double width)
+        {
+            NormalBrush.Width = width;
+        }
+
+        public void ChangeNormalBrushHeight(double height)
+        {
+            NormalBrush.Height = height;
         }
 
 
         /// <summary>
-        /// 改变画笔粗细
+        /// 启用荧光笔笔刷模式
         /// </summary>
-        public void ChangeInkSize(Size size)
+        public void EnterHighlightBrushMode()
         {
-            InkSize = size;
+            BrushMode = ESupportedBrush.Highlight;
+        }
+
+        public void ChangeHighlightBrushColor(Color color)
+        {
+            HighlightBrush.Color = color;
+        }
+
+        public void ChangeHighlightBrushWidth(double width)
+        {
+            HighlightBrush.Width = width;
+        }
+
+        public void ChangeHighlightBrushHeight(double height)
+        {
+            HighlightBrush.Height = height;
         }
 
 
         /// <summary>
-        /// 启用橡皮擦模式
+        /// 启用手指橡皮擦模式
         /// </summary>
-        public void EnterEraserMode()
+        public void EnterFingerEraserMode()
         {
             canvas.EditingMode = InkCanvasEditingMode.EraseByPoint;
+            canvas.EraserShape = FingerEraserSize;
         }
 
 
+        /// <summary>
+        /// 启用手掌橡皮擦模式
+        /// </summary>
+        public void EnterPalmEraserMode()
+        {
+            canvas.EditingMode = InkCanvasEditingMode.EraseByPoint;
+            canvas.EraserShape = PalmEraserSize;
+        }
+ 
         /// <summary>
         /// 调整橡皮擦粗细
         /// </summary>
-        public void ChangeEraserSize(EllipseStylusShape shape)
+        public void ChangeEraserSize(string mode, EllipseStylusShape shape)
         {
-            EraserSize = shape;
+            if(mode == "finger")
+            {
+                FingerEraserSize = shape;
+            } else if (mode == "palm")
+            {
+                PalmEraserSize = shape;
+            }
         }
 
 
@@ -126,10 +222,7 @@ namespace BodySee.Windows
         {
             canvas.EditingMode = InkCanvasEditingMode.Ink;
         }
-
-
         
-
         
         /// <summary>
         /// 清空画布
@@ -238,22 +331,15 @@ namespace BodySee.Windows
 
             if (e.KeyStates == Keyboard.GetKeyStates(Key.E))
             {
-                EnterEraserMode();
-            }
-
-            if (e.KeyStates == Keyboard.GetKeyStates(Key.R))
-            {
-                ChangeColor(Colors.Red);
+                EnterFingerEraserMode();
             }
 
             if (e.KeyStates == Keyboard.GetKeyStates(Key.S))
             {
                 Save();
+                
             }
         }
-        
-
-        
         #endregion
     }
 }

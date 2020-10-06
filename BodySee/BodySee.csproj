@@ -56,6 +56,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Tools\ScreenTouchMode.cs" />
+    <Compile Include="Tools\SystemHandler.cs" />
     <Compile Include="Tools\WindowsHandler.cs" />
     <Compile Include="Windows\BlockingWindow.xaml.cs">
       <DependentUpon>BlockingWindow.xaml</DependentUpon>

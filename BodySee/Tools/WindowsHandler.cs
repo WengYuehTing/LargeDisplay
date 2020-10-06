@@ -87,7 +87,7 @@ namespace BodySee.Tools
                 int nHeight = (int)((double)height * yRatio);
                 int nx = cx - nWidth / 2;
                 int ny = cy - nHeight / 2;
-                WinApiManager.SetWindowPos(hwnd, IntPtr.Zero, nx, ny, nWidth, nHeight, WinApiManager.SWP_NOACTIVATE | WinApiManager.SWP_NOZORDER | WinApiManager.SWP_SHOWWINDOW);
+                WinApiManager.SetWindowPos(hwnd, IntPtr.Zero, x, y, nWidth, nHeight, WinApiManager.SWP_NOACTIVATE | WinApiManager.SWP_NOZORDER | WinApiManager.SWP_SHOWWINDOW);
             }
         }
         #endregion

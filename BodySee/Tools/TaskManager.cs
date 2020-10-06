@@ -39,19 +39,35 @@ namespace BodySee.Tools
                 switch (command)
                 {
                     case "red":
-                        whiteBoard.ChangeColor(Colors.Red);
+                        whiteBoard.ChangeNormalBrushColor(Colors.Red);
+                        whiteBoard.EnterNormalBrushMode();
                         break;
-                    case "green":
-                        whiteBoard.ChangeColor(Colors.Green);
+                    case "yellow":
+                        whiteBoard.ChangeNormalBrushColor(Colors.Yellow);
+                        whiteBoard.EnterNormalBrushMode();
                         break;
                     case "blue":
-                        whiteBoard.ChangeColor(Colors.Blue);
+                        whiteBoard.ChangeNormalBrushColor(Colors.Blue);
+                        whiteBoard.EnterNormalBrushMode();
                         break;
-                    case "eraser":
-                        whiteBoard.EnterEraserMode();
+                    case "black":
+                        whiteBoard.ChangeNormalBrushColor(Colors.Black);
+                        whiteBoard.EnterNormalBrushMode();
+                        break;
+                    case "finger_eraser":
+                        whiteBoard.EnterFingerEraserMode();
+                        break;
+                    case "palm_eraser":
+                        whiteBoard.EnterPalmEraserMode();
                         break;
                     case "clear":
                         whiteBoard.Clear();
+                        break;
+                    case "normal_brush":
+                        whiteBoard.EnterNormalBrushMode();
+                        break;
+                    case "highlight_brush":
+                        whiteBoard.EnterHighlightBrushMode();
                         break;
                     case "two_fingers":
                         WindowsHandler.AcquirePriortyofScreenTouch();
