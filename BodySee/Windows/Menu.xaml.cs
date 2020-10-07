@@ -98,7 +98,7 @@ namespace BodySee.Windows
                 WindowsHandler.BlockingScreenTouch();
 
             if (e.KeyStates == Keyboard.GetKeyStates(Key.E))
-                ScreenShot();
+                WindowsHandler.ReturnToDesktop();
         }
 
         private void Background_Loaded(object sender, RoutedEventArgs e)

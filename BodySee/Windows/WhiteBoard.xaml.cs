@@ -54,7 +54,7 @@ namespace BodySee.Windows
         private Color DEFAULT_NORMAL_COLOR = Colors.Black;
         private double DEFAULT_NORMAL_WIDTH = 2.0f;
         private double DEFAULT_NORMAL_HEIGHT = 2.0f;
-        private Color DEFAULT_HIGHTLIGHT_COLOR = Colors.Black;
+        private Color DEFAULT_HIGHTLIGHT_COLOR = Colors.Yellow;
         private double DEFAULT_HIGHLIGHT_WIDTH = 2.0f;
         private double DEFAULT_HIGHLIGHT_HEIGHT = 20.0f;
         #endregion

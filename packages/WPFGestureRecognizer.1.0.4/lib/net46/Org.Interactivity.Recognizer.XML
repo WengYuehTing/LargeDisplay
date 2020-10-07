@@ -1,0 +1,204 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Org.Interactivity.Recognizer</name>
+    </assembly>
+    <members>
+        <member name="T:Org.Interactivity.Recognizer.Gesture">
+            <summary>
+            Recognisable gestures. Has <see cref="T:System.FlagsAttribute">FlagsAttribute</see> to allow combinations
+            of values (e.g. <code>Gesture.SwipeUp | Gesture.SwipeDown</code>).
+            Recognised gestures will be affected by <see cref="T:Org.Interactivity.Recognizer.GestureModifier"/>.
+            </summary>
+        </member>
+        <member name="F:Org.Interactivity.Recognizer.Gesture.None">
+            <summary>None </summary>
+        </member>
+        <member name="F:Org.Interactivity.Recognizer.Gesture.SwipeUp">
+            <summary>Swipe up</summary>
+        </member>
+        <member name="F:Org.Interactivity.Recognizer.Gesture.SwipeDown">
+            <summary>Swipe down</summary>
+        </member>
+        <member name="F:Org.Interactivity.Recognizer.Gesture.SwipeLeft">
+            <summary>Swipe left</summary>
+        </member>
+        <member name="F:Org.Interactivity.Recognizer.Gesture.SwipeRight">
+            <summary>Swipe right</summary>
+        </member>
+        <member name="F:Org.Interactivity.Recognizer.Gesture.Tap">
+            <summary>Tap</summary>
+        </member>
+        <member name="F:Org.Interactivity.Recognizer.Gesture.All">
+            <summary>All gestures</summary>
+        </member>
+        <member name="T:Org.Interactivity.Recognizer.GestureModifier">
+            <summary>
+            Modifier to be applied to a <see cref="T:Org.Interactivity.Recognizer.Gesture"/> to be trigger upon recognition.
+            </summary>
+        </member>
+        <member name="F:Org.Interactivity.Recognizer.GestureModifier.Any">
+            <summary>
+            Gesture will be triggered regardless of the number of fingers detected.
+            </summary>
+        </member>
+        <member name="F:Org.Interactivity.Recognizer.GestureModifier.OneFinger">
+            <summary>
+            Gesture will be triggered when is performed with a single digit.
+            </summary>
+        </member>
+        <member name="F:Org.Interactivity.Recognizer.GestureModifier.TwoFingers">
+            <summary>
+            Gesture will be triggered when is performed with two fingers.
+            </summary>
+        </member>
+        <member name="F:Org.Interactivity.Recognizer.GestureModifier.ThreeFingers">
+            <summary>
+            Gesture will be triggered when is performed with three fingers.
+            </summary>
+        </member>
+        <member name="F:Org.Interactivity.Recognizer.GestureModifier.FourFingers">
+            <summary>
+            Gesture will be triggered when is performed with four fingers.
+            </summary>
+        </member>
+        <member name="F:Org.Interactivity.Recognizer.GestureModifier.FiveFingers">
+            <summary>
+            Gesture will be triggered when is performed with five fingers.
+            </summary>
+        </member>
+        <member name="T:Org.Interactivity.Recognizer.GestureRecognizer">
+            <summary>
+            Interaction trigger that performs actions when specific gestures are recognised.
+            <note type="note">
+            The implementation will handle up to 5 digits (touch inputs) as there are lots of tablets with that limit.
+            But it can easily be expanded to 10 digits if that is required,
+            although I am not sure how useful it would be to do a 10 finger swipe.
+            </note>
+            </summary>
+        </member>
+        <member name="F:Org.Interactivity.Recognizer.GestureRecognizer.AutoManipulationEnabledProperty">
+            <summary>
+            AutoManipulationEnabled property dependency property key.
+            </summary>
+        </member>
+        <member name="F:Org.Interactivity.Recognizer.GestureRecognizer.TriggerOnGestureProperty">
+            <summary>
+            TriggerOnGesture property dependency property key.
+            </summary>
+        </member>
+        <member name="F:Org.Interactivity.Recognizer.GestureRecognizer.TapThresholdProperty">
+            <summary>
+            Set the tap threshold. If swipes are being recognised as taps lowering this value may help.
+            </summary>
+        </member>
+        <member name="F:Org.Interactivity.Recognizer.GestureRecognizer.UseVelocityForTapDetectionProperty">
+            <summary>
+            Use velocity for tap detection, rather than just gesture translation size. Defaults to off.
+            </summary>
+        </member>
+        <member name="F:Org.Interactivity.Recognizer.GestureRecognizer.GestureModifierProperty">
+            <summary>
+            GestureModifier dependency property key.
+            </summary>
+        </member>
+        <member name="P:Org.Interactivity.Recognizer.GestureRecognizer.AutoManipulationEnabled">
+            <summary>
+            When turned on, it sets the <see cref="P:System.Windows.UIElement.IsManipulationEnabled"/> property on the <see cref="P:System.Windows.Interactivity.TriggerBase`1.AssociatedObject"/> to detect gestures.
+            By default is set to True.
+            </summary>
+        </member>
+        <member name="P:Org.Interactivity.Recognizer.GestureRecognizer.TriggerOnGesture">
+            <summary>
+            Gesture that will trigger associated actions.
+            </summary>
+        </member>
+        <member name="P:Org.Interactivity.Recognizer.GestureRecognizer.TapThreshold">
+            <summary>
+            Set the tap threshold. If swipes are being recognised as taps lowering this value may help.
+            </summary>
+        </member>
+        <member name="P:Org.Interactivity.Recognizer.GestureRecognizer.UseVelocityForTapDetection">
+            <summary>
+            Use velocity for tap detection, rather than just gesture translation size. Defaults to <code>false</code>.
+            </summary>
+        </member>
+        <member name="P:Org.Interactivity.Recognizer.GestureRecognizer.GestureModifier">
+            <summary>
+            Can be used to increase the number of points to be track to trigger a gesture (swipe with one finger, two or more).
+            By default a GestureRecognizer instance will be tracking a single digit.
+            </summary>
+        </member>
+        <member name="M:Org.Interactivity.Recognizer.GestureRecognizer.OnAttached">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Org.Interactivity.Recognizer.GestureRecognizer.OnDetaching">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Org.Interactivity.Recognizer.GestureRecognizer.Org#Interactivity#Recognizer#IGestureRecognitionObserver#OnGestureDetected(Org.Interactivity.Recognizer.Gesture,Org.Interactivity.Recognizer.Option{Org.Interactivity.Recognizer.GestureModifier})">
+            <summary>
+            Explicit implementation of the GestureRecognitionObserver, handling a detected gesture to determine if an action needs to be raised.
+            </summary>
+            <param name="gesture">Detected gesture</param>
+            <param name="modifier">Detected (option) modifier.</param>
+        </member>
+        <member name="T:Org.Interactivity.Recognizer.Option`1">
+            <summary>
+            Option type, represents encapsulation of an optional value (so we don't need to use a nasty nullable... I really wish c# had this type)
+            Thanks to <see href="https://github.com/dtchepak">David Tchepak</see> for implementing the <see href="https://github.com/dtchepak/optiontype/blob/master/Option.cs">Option</see> type for me.
+            </summary>
+            <typeparam name="T">Instance or reference to the wrapped by the option type.</typeparam>
+        </member>
+        <member name="T:Org.Interactivity.Recognizer.RecognitionCentral">
+            <summary>
+            The RecognitionCentral is a unified place in which to handle subscriptions a given <see cref="T:System.Windows.UIElement" /> (or set of) associated to a GestureRecognizer,
+            decreasing the load on the number of elements inspecting the state of the <see cref="T:System.Windows.UIElement"/>.
+            </summary>
+        </member>
+        <member name="F:Org.Interactivity.Recognizer.RecognitionCentral.Default">
+            <summary>
+            Default instance of the RecognitionCentral.
+            </summary>
+        </member>
+        <member name="M:Org.Interactivity.Recognizer.RecognitionCentral.AddObserver(Org.Interactivity.Recognizer.IGestureRecognitionObserver,System.Windows.UIElement)">
+            <summary>
+            Adds a subscription to the element manipulation API of a <see cref="T:System.Windows.UIElement"/> to then
+            be able to notify an observer of any gesture detected.
+            </summary>
+            <param name="observer">Observer associated to a gesture surface, to process any gesture detected.</param>
+            <param name="gestureSurface">Surface associated with the observer in which the gesture will take place.</param>
+        </member>
+        <member name="M:Org.Interactivity.Recognizer.RecognitionCentral.RemoveObserver(Org.Interactivity.Recognizer.IGestureRecognitionObserver,System.Windows.UIElement)">
+            <summary>
+            Drops the subscription to the gesture surface and its associated observer.
+            </summary>
+            <param name="observer">Observer associated to a gesture surface, to process any gesture detected.</param>
+            <param name="gestureSurface">Surface associated with the observer in which the gesture will take place.</param>
+        </member>
+        <member name="T:Org.Interactivity.Recognizer.IGestureRecognitionObserver">
+            <summary>
+            Observer to be associated with a gesture surface (<see cref="T:System.Windows.UIElement"/>).
+            The observer provides the minimum characteristics that will determine which gesture is going to be recognised for itself.
+            </summary>
+        </member>
+        <member name="P:Org.Interactivity.Recognizer.IGestureRecognitionObserver.UseVelocityForTapDetection">
+            <summary>
+            Use velocity for tap detection, rather than just gesture translation size. Defaults to <code>false</code>.
+            </summary>
+        </member>
+        <member name="P:Org.Interactivity.Recognizer.IGestureRecognitionObserver.TapThreshold">
+            <summary>
+            Set the tap threshold. If swipes are being recognised as taps lowering this value may help.
+            </summary>
+        </member>
+        <member name="M:Org.Interactivity.Recognizer.IGestureRecognitionObserver.OnGestureDetected(Org.Interactivity.Recognizer.Gesture,Org.Interactivity.Recognizer.Option{Org.Interactivity.Recognizer.GestureModifier})">
+            <summary>
+            Method in which the observer is going to be notified when a gesture is detected.
+            </summary>
+            <param name="gesture">Recognised gesture</param>
+            <param name="modifier">Recognised modifier. It can be <see cref="M:Org.Interactivity.Recognizer.Option.Empty"/> if there is not enough information to determine the modifier, usually related to a gentle tap.</param>
+        </member>
+    </members>
+</doc>

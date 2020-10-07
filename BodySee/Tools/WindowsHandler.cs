@@ -90,6 +90,15 @@ namespace BodySee.Tools
                 WinApiManager.SetWindowPos(hwnd, IntPtr.Zero, x, y, nWidth, nHeight, WinApiManager.SWP_NOACTIVATE | WinApiManager.SWP_NOZORDER | WinApiManager.SWP_SHOWWINDOW);
             }
         }
+
+        public static void ReturnToDesktop()
+        {
+            var list = GetAllWindowHandle();
+            foreach(IntPtr hwnd in list)
+            {
+                WinApiManager.SendMessage(hwnd, WinApiManager.WM_SYSCOMMAND, WinApiManager.SC_MINIMIZE, IntPtr.Zero);
+            }
+        }
         #endregion
 
 

@@ -1,6 +1,7 @@
 ﻿using BodySee.Tools;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,6 +49,7 @@ namespace BodySee.Windows
         public GestureWindow()
         {
             InitializeComponent();
+
             finger1 = new Dictionary<int, List<Point>>();
             finger2 = new Dictionary<int, List<Point>>();
             bLongPressing = false;
@@ -106,34 +108,34 @@ namespace BodySee.Windows
             if (longPressTimer.IsEnabled)
                 longPressTimer.Stop();
             
-            if (finger1.Count != 0 && finger2.Count != 0 && !bLongPressing)
-            {
-                var list1 = finger1.ElementAt(0).Value;
-                var list2 = finger2.ElementAt(0).Value;
+            //if (finger1.Count != 0 && finger2.Count != 0 && !bLongPressing)
+            //{
+            //    var list1 = finger1.ElementAt(0).Value;
+            //    var list2 = finger2.ElementAt(0).Value;
 
-                int n1 = list1.Count;
-                int n2 = list2.Count;
-                if(list1[n1 - 1].Y - list1[0].Y > SWIPE_THRESHOLD && list2[n2 - 1].Y - list2[0].Y > SWIPE_THRESHOLD && Math.Abs(list1[n1 - 1].X - list1[0].X) < SWIPE_LIMITED && Math.Abs(list2[n2 - 1].X - list2[0].X) < SWIPE_LIMITED)
-                {
-                    Console.WriteLine("双指下滑");
-                    WindowsHandler.MinimizeWindow(_hwnd);
-                }
-                else if (list1[0].Y - list1[n1 - 1].Y > SWIPE_THRESHOLD && list2[0].Y - list2[n2 - 1].Y > SWIPE_THRESHOLD && Math.Abs(list1[n1 - 1].X - list1[0].X) < SWIPE_LIMITED && Math.Abs(list2[n2 - 1].X - list2[0].X) < SWIPE_LIMITED)
-                {
-                    Console.WriteLine("双指上滑");
-                    WindowsHandler.MaximizeWindow(_hwnd);
-                }
-                else if (list1[n1 - 1].X - list1[0].X > SWIPE_THRESHOLD && list2[n2 - 1].X - list2[0].X > SWIPE_THRESHOLD && Math.Abs(list1[n1 - 1].Y - list1[0].Y) < SWIPE_LIMITED && Math.Abs(list2[n2 - 1].Y - list2[0].Y) < SWIPE_LIMITED)
-                {
-                    Console.WriteLine("双指右滑");
-                    WindowsHandler.RestoreWindow(_hwnd);
-                }
-                else if (list1[0].X - list1[n1 - 1].X > SWIPE_THRESHOLD && list2[0].X - list2[n2 - 1].X > SWIPE_THRESHOLD && Math.Abs(list1[n1 - 1].Y - list1[0].Y) < SWIPE_LIMITED && Math.Abs(list2[n2 - 1].Y - list2[0].Y) < SWIPE_LIMITED)
-                {
-                    Console.WriteLine("双指左滑");
-                    WindowsHandler.CloseWindow(_hwnd);
-                }
-            }
+            //    int n1 = list1.Count;
+            //    int n2 = list2.Count;
+            //    if(list1[n1 - 1].Y - list1[0].Y > SWIPE_THRESHOLD && list2[n2 - 1].Y - list2[0].Y > SWIPE_THRESHOLD && Math.Abs(list1[n1 - 1].X - list1[0].X) < SWIPE_LIMITED && Math.Abs(list2[n2 - 1].X - list2[0].X) < SWIPE_LIMITED)
+            //    {
+            //        Console.WriteLine("双指下滑");
+            //        WindowsHandler.MinimizeWindow(_hwnd);
+            //    }
+            //    else if (list1[0].Y - list1[n1 - 1].Y > SWIPE_THRESHOLD && list2[0].Y - list2[n2 - 1].Y > SWIPE_THRESHOLD && Math.Abs(list1[n1 - 1].X - list1[0].X) < SWIPE_LIMITED && Math.Abs(list2[n2 - 1].X - list2[0].X) < SWIPE_LIMITED)
+            //    {
+            //        Console.WriteLine("双指上滑");
+            //        WindowsHandler.MaximizeWindow(_hwnd);
+            //    }
+            //    else if (list1[n1 - 1].X - list1[0].X > SWIPE_THRESHOLD && list2[n2 - 1].X - list2[0].X > SWIPE_THRESHOLD && Math.Abs(list1[n1 - 1].Y - list1[0].Y) < SWIPE_LIMITED && Math.Abs(list2[n2 - 1].Y - list2[0].Y) < SWIPE_LIMITED)
+            //    {
+            //        Console.WriteLine("双指右滑");
+            //        WindowsHandler.RestoreWindow(_hwnd);
+            //    }
+            //    else if (list1[0].X - list1[n1 - 1].X > SWIPE_THRESHOLD && list2[0].X - list2[n2 - 1].X > SWIPE_THRESHOLD && Math.Abs(list1[n1 - 1].Y - list1[0].Y) < SWIPE_LIMITED && Math.Abs(list2[n2 - 1].Y - list2[0].Y) < SWIPE_LIMITED)
+            //    {
+            //        Console.WriteLine("双指左滑");
+            //        WindowsHandler.CloseWindow(_hwnd);
+            //    }
+            //}
 
             finger1 = new Dictionary<int, List<Point>>();
             finger2 = new Dictionary<int, List<Point>>();
@@ -148,10 +150,13 @@ namespace BodySee.Windows
                 this.Close();
         }
 
+        readonly Stopwatch _manipulationTimer = new Stopwatch();
         private void GestureButton_ManipulationStarting(object sender, ManipulationStartingEventArgs e)
         {
+            _manipulationTimer.Restart();
             e.ManipulationContainer = this;
             e.Handled = true;
+            
         }
 
         private void GestureButton_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
@@ -167,12 +172,19 @@ namespace BodySee.Windows
                 e.Handled = true;
             }
         }
-
+        
         private void GestureButton_ManipulationInertiaStarting(object sender, ManipulationInertiaStartingEventArgs e)
         {
+            
             e.TranslationBehavior.DesiredDeceleration = 10.0 * 96.0 / (1000.0 * 1000.0);
             e.ExpansionBehavior.DesiredDeceleration = 0.1 * 96 / (1000.0 * 1000.0);
             e.Handled = true;
+        }
+
+        private void GestureButton_ManipulationCompleted(object sender, ManipulationCompletedEventArgs e)
+        {
+            var millis = _manipulationTimer.ElapsedMilliseconds;
+            Console.WriteLine();
         }
     }
 }

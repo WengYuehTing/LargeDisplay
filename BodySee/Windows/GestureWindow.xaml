@@ -11,7 +11,7 @@
         Topmost="true"
         WindowState="Maximized"
         Title="GestureWindow" Height="450" Width="800">
-    <Button Name="GestureButton" IsManipulationEnabled="True" Opacity="0.01" TouchDown="GestureButton_TouchDown" KeyDown="GestureButton_KeyDown" TouchMove="GestureButton_TouchMove" TouchUp="GestureButton_TouchUp" ManipulationStarting="GestureButton_ManipulationStarting" ManipulationDelta="GestureButton_ManipulationDelta" ManipulationInertiaStarting="GestureButton_ManipulationInertiaStarting">
+    <Button Name="GestureButton" IsManipulationEnabled="True" Opacity="0.01" TouchDown="GestureButton_TouchDown" KeyDown="GestureButton_KeyDown" TouchMove="GestureButton_TouchMove" TouchUp="GestureButton_TouchUp" ManipulationStarting="GestureButton_ManipulationStarting" ManipulationDelta="GestureButton_ManipulationDelta" ManipulationInertiaStarting="GestureButton_ManipulationInertiaStarting" ManipulationCompleted="GestureButton_ManipulationCompleted">
         
     </Button>
 </Window>
