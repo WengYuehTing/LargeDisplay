@@ -31,3 +31,5 @@ C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\bin\Debug\Dapplo.Windows.Comm
 C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\bin\Debug\Dapplo.Windows.Shell32.dll
 C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\bin\Debug\Dapplo.Windows.Common.xml
 C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\bin\Debug\Dapplo.Windows.Shell32.xml
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Debug\Interop.Shell32.dll
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Debug\BodySee.csproj.ResolveComReference.cache

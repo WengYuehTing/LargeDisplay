@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:BodySee.Windows"
         mc:Ignorable="d"
         Topmost="True"
+        ResizeMode="NoResize"
         Title="Menu" Height="100" Width="200">
     <Grid x:Name="background" KeyDown="Background_KeyDown" Focusable="True" Loaded="Background_Loaded">
         <Image x:Name="WhiteBoardIcon" Source="../Images/whiteboard.jpg" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="100" TouchDown="WhiteBoardIcon_TouchDown"/>

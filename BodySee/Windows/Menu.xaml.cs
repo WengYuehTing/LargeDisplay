@@ -32,6 +32,7 @@ namespace BodySee.Windows
             InitializeComponent();
             this.Width = WindowsHandler.GetScreenWidth() * WindowsHandler.WRATIO;
             this.Height = WindowsHandler.GetScreenHeight() * WindowsHandler.HRATIO;
+           
             Client client = new Client();
             TaskManager.getInstance().menu = this;
         }

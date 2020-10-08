@@ -93,13 +93,15 @@ namespace BodySee.Tools
 
         public static void ReturnToDesktop()
         {
-            IntPtr desktop = WinApiManager.GetShellWindow();
-            WinApiManager.BringWindowToTop(desktop);
-            //var list = EnumerateWindow();
-            //foreach(IntPtr hwnd in list)
-            //{
-            //    WinApiManager.SendMessage(hwnd, WinApiManager.WM_SYSCOMMAND, WinApiManager.SC_MINIMIZE, IntPtr.Zero);
-            //}
+            Shell32.Shell shell = new Shell32.Shell();
+            shell.ToggleDesktop();
+            foreach(Window window in Application.Current.Windows)
+            {
+                if(window.Title == "Menu" && window.WindowState == WindowState.Minimized)
+                {
+                    window.WindowState = WindowState.Normal;
+                }
+            }
         }
         #endregion
 
