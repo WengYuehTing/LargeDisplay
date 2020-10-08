@@ -93,11 +93,13 @@ namespace BodySee.Tools
 
         public static void ReturnToDesktop()
         {
-            var list = GetAllWindowHandle();
-            foreach(IntPtr hwnd in list)
-            {
-                WinApiManager.SendMessage(hwnd, WinApiManager.WM_SYSCOMMAND, WinApiManager.SC_MINIMIZE, IntPtr.Zero);
-            }
+            IntPtr desktop = WinApiManager.GetShellWindow();
+            WinApiManager.BringWindowToTop(desktop);
+            //var list = EnumerateWindow();
+            //foreach(IntPtr hwnd in list)
+            //{
+            //    WinApiManager.SendMessage(hwnd, WinApiManager.WM_SYSCOMMAND, WinApiManager.SC_MINIMIZE, IntPtr.Zero);
+            //}
         }
         #endregion
 
@@ -145,9 +147,28 @@ namespace BodySee.Tools
         #endregion
 
         #region Find Active/Topmost Windows
+
+        public static bool IsAltTabWindow(IntPtr hwnd)
+        {
+            const uint WS_EX_TOOLWINDOW = 0x00000080;
+            const uint DWMWA_CLOAKED = 14;
+
+            if (!WinApiManager.IsWindowVisible(hwnd)) return false;
+
+            if (GetWindowTitle(hwnd) == null) return false;
+
+            WinApiManager.WINDOWINFO winInfo = new WinApiManager.WINDOWINFO(true);
+            WinApiManager.GetWindowInfo(hwnd, ref winInfo);
+            if ((winInfo.dwExStyle & WS_EX_TOOLWINDOW) != 0) return false;
+            uint CloakedVal;
+            WinApiManager.DwmGetWindowAttribute(hwnd, DWMWA_CLOAKED, out CloakedVal, sizeof(uint));
+            return CloakedVal == 0;
+        }
+
+
         public static IntPtr FindTopmostWindow()
         {
-            List<IntPtr> hwnds = GetAllWindowHandle();
+            List<IntPtr> hwnds = EnumerateWindow();
             if (hwnds.Count != 0)
             {
                 int max = -1;
@@ -219,23 +240,25 @@ namespace BodySee.Tools
                 return GetLastVisibleActivePopUpOfWindow(lastPopUp);
         }
 
-        public static List<IntPtr> GetAllWindowHandle()
+        public static List<IntPtr> EnumerateWindow()
         {
-            Process[] processList = Process.GetProcesses();
-            List<IntPtr> list = new List<IntPtr>();
-            foreach (Process p in processList)
+            List<IntPtr> windows = new List<IntPtr>();
+            WinApiManager.EnumWindows(delegate (IntPtr hwnd, int param)
             {
-                IntPtr hWnd = p.MainWindowHandle;
-                if (IsWindowInterested(hWnd) && GetWindowTitle(hWnd) != "Menu" && GetWindowTitle(hWnd) != "GestureWindow")
-                {
-                    list.Add(hWnd);
-                    //Debug.WriteLine("Title: {0} ZOrder: {1}", p.MainWindowTitle, GetWindowZOrder(p.MainWindowHandle));
-                    //Debug.WriteLine("Process: {0} ID: {1}, Window title: {2}", p.ProcessName, p.Id, p.MainWindowTitle);
-                }
-            }
+                if (!IsAltTabWindow(hwnd))
+                    return true;
 
-            //Console.WriteLine("Found {0} windows", list.Count);
-            return list;
+                windows.Add(hwnd);
+                return true;
+            }, 0);
+
+
+            Console.WriteLine(windows.Count);
+            foreach (IntPtr hWnd in windows)
+            {
+                Console.WriteLine(GetWindowTitle(hWnd));
+            }
+            return windows;
         }
         #endregion
 

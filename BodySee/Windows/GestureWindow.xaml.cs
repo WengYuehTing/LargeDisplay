@@ -85,7 +85,7 @@ namespace BodySee.Windows
         private void GestureButton_TouchMove(object sender, TouchEventArgs e)
         {
             int id = e.TouchDevice.Id;
-            Point position = this.PointToScreen(new Point(e.GetTouchPoint(this).Position.X, e.GetTouchPoint(this).Position.Y));
+            Point position = PointToScreen(new Point(e.GetTouchPoint(this).Position.X, e.GetTouchPoint(this).Position.Y));
             if (finger1.ContainsKey(id))
             {
                 finger1[id].Add(position);

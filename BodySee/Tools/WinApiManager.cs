@@ -28,6 +28,26 @@ namespace BodySee.Tools
             public int Bottom;
         }
 
+        [StructLayout(LayoutKind.Sequential)]
+        public struct WINDOWINFO
+        {
+            public uint cbSize;
+            public RECT rcWindow;
+            public RECT rcClient;
+            public uint dwStyle;
+            public uint dwExStyle;
+            public uint dwWindowStatus;
+            public uint cxWindowBorders;
+            public uint cyWindowBorders;
+            public ushort atomWindowType;
+            public ushort wCreatorVersion;
+
+            public WINDOWINFO(Boolean? filter) : this()
+            {
+                cbSize = (UInt32)(Marshal.SizeOf(typeof(WINDOWINFO)));
+            }
+        }
+
 
         #region Win32 API 
         [DllImport("user32.dll", SetLastError = true)]
@@ -46,10 +66,14 @@ namespace BodySee.Tools
         public static extern bool EnumWindows(EnumWindowsProc enumProc, int lParam);
 
         [DllImport("user32.dll")]
-        public static extern bool GetWindowRect(IntPtr hWnd, out RECT rect);
+        public static extern bool GetWindowRect(IntPtr hwnd, out RECT rect);
 
         [DllImport("user32.dll")]
-        public static extern bool IsWindowVisible(IntPtr hWnd);
+        public static extern bool IsWindowVisible(IntPtr hwnd);
+
+        [return: MarshalAs(UnmanagedType.Bool)]
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool GetWindowInfo(IntPtr hwnd, ref WINDOWINFO pwi);
 
         [DllImport("user32.dll")]
         public static extern IntPtr GetForegroundWindow();
@@ -84,6 +108,12 @@ namespace BodySee.Tools
 
         [DllImport("user32.dll", SetLastError = true)]
         public static extern bool SetWindowPos(IntPtr hwnd, IntPtr hwndInsertAfter, int X, int Y, int cx, int cy, int uFlags);
+
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmGetWindowAttribute(IntPtr hwnd, uint dwAttibute, out uint pvAttribute, uint cbAttribute);
+
+        [DllImport("user32.dll")]
+        public static extern bool BringWindowToTop(IntPtr hwnd);
 
         public delegate bool EnumWindowsProc(IntPtr hWnd, int lParam);
         #endregion

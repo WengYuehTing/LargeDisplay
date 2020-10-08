@@ -1,0 +1,200 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Dapplo.Windows.Shell32</name>
+    </assembly>
+    <members>
+        <member name="T:Dapplo.Windows.Shell32.Enums.AppBarEdges">
+            <summary>
+            A value that specifies an edge of the screen.
+            </summary>
+        </member>
+        <member name="F:Dapplo.Windows.Shell32.Enums.AppBarEdges.Left">
+            <summary>
+            Left edge.
+            </summary>
+        </member>
+        <member name="F:Dapplo.Windows.Shell32.Enums.AppBarEdges.Top">
+            <summary>
+            Top edge.
+            </summary>
+        </member>
+        <member name="F:Dapplo.Windows.Shell32.Enums.AppBarEdges.Right">
+            <summary>
+            Right edge.
+            </summary>
+        </member>
+        <member name="F:Dapplo.Windows.Shell32.Enums.AppBarEdges.Bottom">
+            <summary>
+            Bottom edge.
+            </summary>
+        </member>
+        <member name="T:Dapplo.Windows.Shell32.Enums.AppBarMessages">
+            <summary>
+            Sends an appbar message to the system.
+                See <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/bb762108.aspx">SHAppBarMessage function</a>
+            </summary>
+        </member>
+        <member name="F:Dapplo.Windows.Shell32.Enums.AppBarMessages.New">
+            <summary>
+            ABM_NEW - Registers a new appbar and specifies the message identifier that the system should use to send notification messages to the appbar.
+            </summary>
+        </member>
+        <member name="F:Dapplo.Windows.Shell32.Enums.AppBarMessages.Remove">
+            <summary>
+            ABM_REMOVE - Unregisters an appbar, removing the bar from the system's internal list.
+            </summary>
+        </member>
+        <member name="F:Dapplo.Windows.Shell32.Enums.AppBarMessages.QueryPosition">
+            <summary>
+            ABM_QUERYPOS - Requests a size and screen position for an appbar.
+            </summary>
+        </member>
+        <member name="F:Dapplo.Windows.Shell32.Enums.AppBarMessages.SetPosition">
+            <summary>
+            ABM_SETPOS - Sets the size and screen position of an appbar.
+            </summary>
+        </member>
+        <member name="F:Dapplo.Windows.Shell32.Enums.AppBarMessages.GetState">
+            <summary>
+            ABM_GETSTATE - Retrieves the autohide and always-on-top states of the Windows taskbar.
+            </summary>
+        </member>
+        <member name="F:Dapplo.Windows.Shell32.Enums.AppBarMessages.GetTaskbarPosition">
+            <summary>
+            ABM_GETTASKBARPOS - Retrieves the bounding rectangle of the Windows taskbar. Note that this applies only to the
+            system taskbar. Other objects, particularly toolbars supplied with third-party software, also can be
+            present. As a result, some of the screen area not covered by the Windows taskbar might not be visible
+            to the user. To retrieve the area of the screen not covered by both the taskbar and other app bars—the
+            working area available to your application—, use the GetMonitorInfo function.
+            </summary>
+        </member>
+        <member name="F:Dapplo.Windows.Shell32.Enums.AppBarMessages.Activate">
+            <summary>
+            ABM_ACTIVATE - Notifies the system to activate or deactivate an appbar. The lParam member of the APPBARDATA pointed to by pData is set to TRUE to activate or FALSE to deactivate.
+            </summary>
+        </member>
+        <member name="F:Dapplo.Windows.Shell32.Enums.AppBarMessages.GetAutoHideAppBar">
+            <summary>
+            ABM_GETAUTOHIDEBAR - Retrieves the handle to the autohide appbar associated with a particular edge of the screen.
+            </summary>
+        </member>
+        <member name="F:Dapplo.Windows.Shell32.Enums.AppBarMessages.SetAutohideAppBar">
+            <summary>
+            ABM_SETAUTOHIDEBAR - Registers or unregisters an autohide appbar for an edge of the screen.
+            </summary>
+        </member>
+        <member name="F:Dapplo.Windows.Shell32.Enums.AppBarMessages.WindowPositionChanged">
+            <summary>
+            ABM_WINDOWPOSCHANGED - Notifies the system when an appbar's position has changed.
+            </summary>
+        </member>
+        <member name="F:Dapplo.Windows.Shell32.Enums.AppBarMessages.SetState">
+            <summary>
+            ABM_SETSTATE - Windows XP and later: Sets the state of the appbar's autohide and always-on-top attributes.
+            </summary>
+        </member>
+        <member name="F:Dapplo.Windows.Shell32.Enums.AppBarMessages.GetAutoHideAppBarExtended">
+            <summary>
+            ABM_GETAUTOHIDEBAREX - Windows XP and later: Retrieves the handle to the autohide appbar associated with a particular edge of a particular monitor.
+            </summary>
+        </member>
+        <member name="F:Dapplo.Windows.Shell32.Enums.AppBarMessages.SetAutoHideAppBarExtended">
+            <summary>
+            ABM_SETAUTOHIDEBAREX - Windows XP and later: Registers or unregisters an autohide appbar for an edge of a particular monitor.
+            </summary>
+        </member>
+        <member name="T:Dapplo.Windows.Shell32.Enums.AppBarStates">
+            <summary>
+            A value that specifies an edge of the screen.
+            </summary>
+        </member>
+        <member name="F:Dapplo.Windows.Shell32.Enums.AppBarStates.None">
+            <summary>
+            ABS_MANUAL - No automatic function
+            </summary>
+        </member>
+        <member name="F:Dapplo.Windows.Shell32.Enums.AppBarStates.AutoHide">
+            <summary>
+            ABS_AUTOHIDE - Autohides the AppBar
+            </summary>
+        </member>
+        <member name="F:Dapplo.Windows.Shell32.Enums.AppBarStates.AllwaysOnTop">
+            <summary>
+            ABS_ALWAYSONTOP - Make sure the AppBar is always on top 
+            </summary>
+        </member>
+        <member name="T:Dapplo.Windows.Shell32.Shell32Api">
+            <summary>
+            An API for Shell32 functionality
+            </summary>
+        </member>
+        <member name="P:Dapplo.Windows.Shell32.Shell32Api.TaskbarPosition">
+            <summary>
+            Returns an AppBarData struct which describes the Taskbar bounds etc
+            </summary>
+            <returns>AppBarData</returns>
+        </member>
+        <member name="M:Dapplo.Windows.Shell32.Shell32Api.SHAppBarMessage(Dapplo.Windows.Shell32.Enums.AppBarMessages,Dapplo.Windows.Shell32.Structs.AppBarData@)">
+            <summary>
+            Sends an appbar message to the system.
+            See <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/bb762108.aspx">SHAppBarMessage function</a>
+            </summary>
+            <param name="dwMessage">AppBarMessages - Appbar message value to send.</param>
+            <param name="pData">A pointer to an AppBarData structure. The content of the structure on entry and on exit depends on the value set in the dwMessage parameter.
+            See the individual message pages for specifics.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Dapplo.Windows.Shell32.Structs.AppBarData">
+            <summary>
+            Contains information about a system appbar message.
+            This is used by the <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/bb762108.aspx">SHAppBarMessage function</a>
+            </summary>
+        </member>
+        <member name="F:Dapplo.Windows.Shell32.Structs.AppBarData._cbSize">
+            <summary>
+            Size of the structure, used internally
+            </summary>
+        </member>
+        <member name="M:Dapplo.Windows.Shell32.Structs.AppBarData.SetWindowHandle(System.IntPtr)">
+            <summary>
+            Sets the handle to the appbar window.  Not all messages use this member.
+            See the individual message page to see if you need to provide an hWindow value.
+            </summary>
+        </member>
+        <member name="P:Dapplo.Windows.Shell32.Structs.AppBarData.CallbackMessageIdentifier">
+            <summary>
+            An application-defined message identifier. The application uses the specified identifier for notification messages that it sends to the appbar identified by the hWnd member.
+            This member is used when sending the ABM_NEW message.
+            </summary>
+        </member>
+        <member name="P:Dapplo.Windows.Shell32.Structs.AppBarData.AppBarEdge">
+            <summary>
+            This member is used when sending one of these messages:
+            ABM_GETAUTOHIDEBAR, ABM_SETAUTOHIDEBAR, ABM_GETAUTOHIDEBAREX, ABM_SETAUTOHIDEBAREX, ABM_QUERYPOS, ABM_SETPOS
+            </summary>
+        </member>
+        <member name="P:Dapplo.Windows.Shell32.Structs.AppBarData.Bounds">
+            <summary>
+            A RECT structure whose use varies depending on the message:
+            ABM_GETTASKBARPOS, ABM_QUERYPOS, ABM_SETPOS: The bounding rectangle, in screen coordinates, of an appbar or the Windows taskbar.
+            ABM_GETAUTOHIDEBAREX, ABM_SETAUTOHIDEBAREX: The monitor on which the operation is being performed. This information can be retrieved through the GetMonitorInfo function.
+            </summary>
+        </member>
+        <member name="P:Dapplo.Windows.Shell32.Structs.AppBarData.AutoHide">
+            <summary>
+            Used for the ABM_SETAUTOHIDEBAR, ABM_SETAUTOHIDEBAREX message
+            </summary>
+        </member>
+        <member name="P:Dapplo.Windows.Shell32.Structs.AppBarData.State">
+            <summary>
+            Used for the ABM_SETAUTOHIDEBAR, ABM_SETAUTOHIDEBAREX message
+            </summary>
+        </member>
+        <member name="M:Dapplo.Windows.Shell32.Structs.AppBarData.Create">
+            <summary>
+                Gets the default (empty) value.
+            </summary>
+        </member>
+    </members>
+</doc>

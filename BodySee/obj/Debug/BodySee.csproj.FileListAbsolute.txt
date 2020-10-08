@@ -21,3 +21,13 @@ C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Debug\Windows\Menu.g.cs
 C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Debug\Windows\Menu.baml
 C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\bin\Debug\System.Drawing.Common.dll
 C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Debug\BodySee.csproj.CopyComplete
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\bin\Debug\Microsoft.Expression.Interactions.dll
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\bin\Debug\Org.Interactivity.Recognizer.dll
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\bin\Debug\System.Windows.Interactivity.dll
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\bin\Debug\Microsoft.Expression.Interactions.xml
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\bin\Debug\Org.Interactivity.Recognizer.xml
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\bin\Debug\System.Windows.Interactivity.xml
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\bin\Debug\Dapplo.Windows.Common.dll
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\bin\Debug\Dapplo.Windows.Shell32.dll
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\bin\Debug\Dapplo.Windows.Common.xml
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\bin\Debug\Dapplo.Windows.Shell32.xml

@@ -85,10 +85,7 @@ namespace BodySee.Windows
             }
         }
 
-
         
-
-
         private void Background_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyStates == Keyboard.GetKeyStates(Key.Q))
