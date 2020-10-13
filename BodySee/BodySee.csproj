@@ -35,6 +35,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AudioSwitcher.AudioApi, Version=3.0.0.209, Culture=neutral, PublicKeyToken=fda5729e2db3a64f, processorArchitecture=MSIL">
+      <HintPath>..\packages\AudioSwitcher.AudioApi.3.0.0\lib\net40\AudioSwitcher.AudioApi.dll</HintPath>
+    </Reference>
+    <Reference Include="AudioSwitcher.AudioApi.CoreAudio, Version=3.0.0.209, Culture=neutral, PublicKeyToken=fda5729e2db3a64f, processorArchitecture=MSIL">
+      <HintPath>..\packages\AudioSwitcher.AudioApi.CoreAudio.3.0.0.1\lib\net40\AudioSwitcher.AudioApi.CoreAudio.dll</HintPath>
+    </Reference>
     <Reference Include="Dapplo.Windows.Common, Version=0.11.0.0, Culture=neutral, PublicKeyToken=5be96fed5d651fee, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapplo.Windows.Common.0.11.17\lib\net461\Dapplo.Windows.Common.dll</HintPath>
     </Reference>
@@ -76,6 +82,7 @@
     </ApplicationDefinition>
     <Compile Include="Tools\ScreenTouchMode.cs" />
     <Compile Include="Tools\SystemHandler.cs" />
+    <Compile Include="Tools\VolumeAdjuster.cs" />
     <Compile Include="Tools\WindowsHandler.cs" />
     <Compile Include="Windows\BlockingWindow.xaml.cs">
       <DependentUpon>BlockingWindow.xaml</DependentUpon>

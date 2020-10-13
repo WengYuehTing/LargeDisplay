@@ -15,6 +15,7 @@ using BodySee.Tools;
 using System.Drawing;
 using Microsoft.Win32;
 using System.IO;
+using System.Windows.Interop;
 
 namespace BodySee.Windows
 {
@@ -96,7 +97,10 @@ namespace BodySee.Windows
                 WindowsHandler.BlockingScreenTouch();
 
             if (e.KeyStates == Keyboard.GetKeyStates(Key.E))
-                WindowsHandler.ReturnToDesktop();
+            {
+                VolumeAdjuster.getInstance().SetVolume(30);
+            }
+                
         }
 
         private void Background_Loaded(object sender, RoutedEventArgs e)

@@ -162,6 +162,7 @@ namespace BodySee.Tools
             WinApiManager.WINDOWINFO winInfo = new WinApiManager.WINDOWINFO(true);
             WinApiManager.GetWindowInfo(hwnd, ref winInfo);
             if ((winInfo.dwExStyle & WS_EX_TOOLWINDOW) != 0) return false;
+
             uint CloakedVal;
             WinApiManager.DwmGetWindowAttribute(hwnd, DWMWA_CLOAKED, out CloakedVal, sizeof(uint));
             return CloakedVal == 0;
