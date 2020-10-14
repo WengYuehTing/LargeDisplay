@@ -163,5 +163,14 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\app_list_tmp.jpeg" />
+    <Resource Include="Images\brightness_tmp.jpeg" />
+    <Resource Include="Images\desktop_tmp.jpeg" />
+    <Resource Include="Images\redo_tmp.png" />
+    <Resource Include="Images\screenshot_tmp.png" />
+    <Resource Include="Images\undo_tmp.png" />
+    <Resource Include="Images\volume_tmp.jpeg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

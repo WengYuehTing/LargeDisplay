@@ -7,9 +7,44 @@
         mc:Ignorable="d"
         Topmost="True"
         ResizeMode="NoResize"
-        Title="Menu" Height="100" Width="200">
+        Title="Menu" Height="210" Width="597">
     <Grid x:Name="background" KeyDown="Background_KeyDown" Focusable="True" Loaded="Background_Loaded">
-        <Image x:Name="WhiteBoardIcon" Source="../Images/whiteboard.jpg" HorizontalAlignment="Left" Height="72" VerticalAlignment="Top" Width="100" TouchDown="WhiteBoardIcon_TouchDown"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image x:Name="WhiteBoardIcon" Grid.Column="0" Source="../Images/whiteboard.jpg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TouchDown="WhiteBoardIcon_TouchDown" Margin="10"/>
+                <Image x:Name="UndoIcon" Grid.Column="1" Source="../Images/undo_tmp.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TouchDown="UndoIcon_TouchDown" Margin="10"/>
+                <Image x:Name="RedoIcon" Grid.Column="2" Source="../Images/redo_tmp.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TouchDown="RedoIcon_TouchDown" Margin="10"/>
+                <Image x:Name="ScreenshotIcon" Grid.Column="3" Source="../Images/screenshot_tmp.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TouchDown="ScreenshotIcon_TouchDown" Margin="10"/>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image x:Name="DesktopIcon" Grid.Column="0" Source="../Images/desktop_tmp.jpeg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TouchDown="DesktopIcon_TouchDown" Margin="10"/>
+                <Image x:Name="AppListIcon" Grid.Column="1" Source="../Images/app_list_tmp.jpeg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TouchDown="AppListIcon_TouchDown" Margin="10"/>
+                <Image x:Name="VolumeIcon" Grid.Column="2" Source="../Images/volume_tmp.jpeg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TouchDown="VolumeIcon_TouchDown" Margin="10"/>
+                <Image x:Name="BrightnessIcon" Grid.Column="3" Source="../Images/brightness_tmp.jpeg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TouchDown="BrightnessIcon_TouchDown" Margin="10"/>
+            </Grid>
+
+        </Grid>
+
+
+
+            
 
     </Grid>
 </Window>

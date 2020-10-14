@@ -39,6 +39,7 @@ namespace BodySee.Windows
             VolumeAdjuster.getInstance().Delegate = this;
         }
 
+        #region Public Methods
         public void moveWindow(double x)
         {
             this.Left += x;
@@ -49,8 +50,14 @@ namespace BodySee.Windows
             this.Left += x;
             this.Top += y;
         }
+        #endregion
 
-        public void ScreenShot()
+
+        #region Private Methods
+        /// <summary>
+        /// Take a screenshot and save into local.
+        /// </summary>
+        private void ScreenShot()
         {
             double left = SystemParameters.VirtualScreenLeft;
             double top = SystemParameters.VirtualScreenTop;
@@ -72,8 +79,15 @@ namespace BodySee.Windows
                 });
             }
         }
+        #endregion
 
 
+        #region UI Events
+        /// <summary>
+        /// Toggle whiteboard. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void WhiteBoardIcon_TouchDown(object sender, TouchEventArgs e)
         {
             if (!WindowsHandler.IsWindowOpen<WhiteBoard>())
@@ -88,7 +102,69 @@ namespace BodySee.Windows
             }
         }
 
+        private void UndoIcon_TouchDown(object sender, TouchEventArgs e)
+        {
+            if (_whiteBoard != null)
+                _whiteBoard.Undo();
+        }
+
+        private void RedoIcon_TouchDown(object sender, TouchEventArgs e)
+        {
+            if (_whiteBoard != null)
+                _whiteBoard.Redo();
+        }
+
+        private void ScreenshotIcon_TouchDown(object sender, TouchEventArgs e)
+        {
+            ScreenShot();
+        }
+
+        private void DesktopIcon_TouchDown(object sender, TouchEventArgs e)
+        {
+            WindowsHandler.ReturnToDesktop();
+        }
+
+        private void AppListIcon_TouchDown(object sender, TouchEventArgs e)
+        {
+            //TODO 弹出App list
+        }
+
+        private void VolumeIcon_TouchDown(object sender, TouchEventArgs e)
+        {
+            //TODO 弹出音量Slider
+
+        }
+
+        private void BrightnessIcon_TouchDown(object sender, TouchEventArgs e)
+        {
+            //TODO 弹出亮度Slider
+        }
+        #endregion
+
+
+        #region Interface Methods
+        /// <summary>
+        /// Implementation of IVolumeInterface methods.
+        /// </summary>
+        /// <param name="_vol"></param>
+        public void OnVolumeChange(double _vol)
+        {
+            if (_vol == 0)
+                VolumeAdjuster.getInstance().SetMute(true);
+            else
+                VolumeAdjuster.getInstance().SetMute(false);
+        }
+
+
+        /// <summary>
+        /// Implementation of IVolumeInterface methods.
+        /// </summary>
+        /// <param name="_vol"></param>
+        public void OnMutedChange(bool _mute) { }
+        #endregion
+
         
+        #region Debug
         private void Background_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyStates == Keyboard.GetKeyStates(Key.Q))
@@ -108,25 +184,8 @@ namespace BodySee.Windows
         {
             background.Focus();
         }
-
-        #region Interface Methods
-        /// <summary>
-        /// Implementation of IVolumeInterface methods.
-        /// </summary>
-        /// <param name="_vol"></param>
-        public void OnVolumeChange(double _vol)
-        {
-            if(_vol == 0)
-                VolumeAdjuster.getInstance().SetMute(true);
-            else
-                VolumeAdjuster.getInstance().SetMute(false);
-        }
-
-        /// <summary>
-        /// Implementation of IVolumeInterface methods.
-        /// </summary>
-        /// <param name="_vol"></param>
-        public void OnMutedChange(bool _mute) {}
         #endregion
+
+        
     }
 }
