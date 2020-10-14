@@ -80,8 +80,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Tools\BrightnessAdjuster.cs" />
     <Compile Include="Tools\ScreenTouchMode.cs" />
-    <Compile Include="Tools\SystemHandler.cs" />
     <Compile Include="Tools\VolumeAdjuster.cs" />
     <Compile Include="Tools\WindowsHandler.cs" />
     <Compile Include="Windows\BlockingWindow.xaml.cs">

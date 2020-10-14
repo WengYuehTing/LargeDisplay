@@ -22,7 +22,7 @@ namespace BodySee.Windows
     /// <summary>
     /// Menu.xaml 的交互逻辑
     /// </summary>
-    public partial class Menu : Window
+    public partial class Menu : Window, IVolumeInterface
     {
         #region Private Fields
         private WhiteBoard _whiteBoard;
@@ -36,6 +36,7 @@ namespace BodySee.Windows
            
             Client client = new Client();
             TaskManager.getInstance().menu = this;
+            VolumeAdjuster.getInstance().Delegate = this;
         }
 
         public void moveWindow(double x)
@@ -98,7 +99,7 @@ namespace BodySee.Windows
 
             if (e.KeyStates == Keyboard.GetKeyStates(Key.E))
             {
-                VolumeAdjuster.getInstance().SetVolume(30);
+                BrightnessAdjuster.getInstance().SetBrightness(180);
             }
                 
         }
@@ -107,5 +108,25 @@ namespace BodySee.Windows
         {
             background.Focus();
         }
+
+        #region Interface Methods
+        /// <summary>
+        /// Implementation of IVolumeInterface methods.
+        /// </summary>
+        /// <param name="_vol"></param>
+        public void OnVolumeChange(double _vol)
+        {
+            if(_vol == 0)
+                VolumeAdjuster.getInstance().SetMute(true);
+            else
+                VolumeAdjuster.getInstance().SetMute(false);
+        }
+
+        /// <summary>
+        /// Implementation of IVolumeInterface methods.
+        /// </summary>
+        /// <param name="_vol"></param>
+        public void OnMutedChange(bool _mute) {}
+        #endregion
     }
 }
