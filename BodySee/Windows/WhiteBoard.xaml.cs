@@ -57,6 +57,10 @@ namespace BodySee.Windows
         private Color DEFAULT_HIGHTLIGHT_COLOR = Colors.Yellow;
         private double DEFAULT_HIGHLIGHT_WIDTH = 2.0f;
         private double DEFAULT_HIGHLIGHT_HEIGHT = 20.0f;
+        private double MAX_NORMAL_SIZE = 10.0f;
+        private double MIN_NORMAL_SIZE = 1.0f;
+        private double MAX_HIGHLIGHT_HEIGHT = 30.0f;
+        private double MIN_HIGHLIGHT_HEIGHT = 10.0f;
         #endregion
 
         #region Properties
@@ -125,7 +129,8 @@ namespace BodySee.Windows
             HighlightBrush = new CustomBrush(DEFAULT_HIGHTLIGHT_COLOR, DEFAULT_HIGHLIGHT_WIDTH, DEFAULT_HIGHLIGHT_HEIGHT);
             FingerEraserSize = new EllipseStylusShape(50, 50);
             PalmEraserSize = new EllipseStylusShape(500, 500);
-            BrushMode = ESupportedBrush.Normal;
+            EnterNormalBrushMode();
+            
 
             canvas.Strokes.StrokesChanged += Strokes_StrokesChanged;
             TaskManager.getInstance().whiteBoard = this;
@@ -138,6 +143,9 @@ namespace BodySee.Windows
         public void EnterNormalBrushMode()
         {
             BrushMode = ESupportedBrush.Normal;
+            SizeSlider.Maximum = MAX_NORMAL_SIZE;
+            SizeSlider.Minimum = MIN_NORMAL_SIZE;
+            SizeSlider.Value = NormalBrush.Width;
         }
 
 
@@ -163,6 +171,9 @@ namespace BodySee.Windows
         public void EnterHighlightBrushMode()
         {
             BrushMode = ESupportedBrush.Highlight;
+            SizeSlider.Maximum = MAX_HIGHLIGHT_HEIGHT;
+            SizeSlider.Minimum = MIN_HIGHLIGHT_HEIGHT;
+            SizeSlider.Value = HighlightBrush.Height;
         }
 
         public void ChangeHighlightBrushColor(Color color)
@@ -283,6 +294,22 @@ namespace BodySee.Windows
                 canvas.Margin = thickness;
             }
         }
+
+        public void ShowPenMenu(int x, int y)
+        {
+            PenMenu.Visibility = Visibility.Visible;
+            Thickness margin = PenMenu.Margin;
+            margin.Left = x;
+            margin.Top = y;
+            PenMenu.Margin = margin;
+        }
+
+        public void HidePenMenu()
+        {
+            PenMenu.Visibility = Visibility.Collapsed;
+        }
+
+
         #endregion
 
         #region UI Event
@@ -309,6 +336,8 @@ namespace BodySee.Windows
         {
             _editingOperationCount++;
         }
+
+
         #endregion
 
         #region Debug
@@ -334,12 +363,67 @@ namespace BodySee.Windows
                 EnterFingerEraserMode();
             }
 
-            if (e.KeyStates == Keyboard.GetKeyStates(Key.S))
+            if (e.KeyStates == Keyboard.GetKeyStates(Key.R))
             {
-                Save();
+                EnterHighlightBrushMode();
                 
             }
         }
         #endregion
+
+        private void BlackBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (BrushMode == ESupportedBrush.Normal)
+                ChangeNormalBrushColor(Colors.Black);
+            else
+                ChangeHighlightBrushColor(Colors.Black);
+
+            BrushMode = BrushMode; //refresh
+        }
+
+        private void RedBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (BrushMode == ESupportedBrush.Normal)
+                ChangeNormalBrushColor(Colors.Red);
+            else
+                ChangeHighlightBrushColor(Colors.Red);
+
+            BrushMode = BrushMode; //refresh
+        }
+
+        private void BlueBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (BrushMode == ESupportedBrush.Normal)
+                ChangeNormalBrushColor(Colors.Blue);
+            else
+                ChangeHighlightBrushColor(Colors.Blue);
+
+            BrushMode = BrushMode; //refresh
+        }
+
+        private void YellowBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (BrushMode == ESupportedBrush.Normal)
+                ChangeNormalBrushColor(Colors.Yellow);
+            else
+                ChangeHighlightBrushColor(Colors.Yellow);
+
+            BrushMode = BrushMode; //refresh
+        }
+
+        private void SizeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (BrushMode == ESupportedBrush.Normal)
+            {
+                NormalBrush.Width = e.NewValue;
+                NormalBrush.Height = e.NewValue;
+            }
+            else
+            {
+                HighlightBrush.Height = e.NewValue;
+            }
+
+            BrushMode = BrushMode; //refresh
+        }
     }
 }

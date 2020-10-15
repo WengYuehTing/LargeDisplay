@@ -8,6 +8,67 @@
         WindowState="Maximized"
         Title="WhiteBoard" Height="450" Width="800">
     <Grid>
-        <InkCanvas x:Name="canvas" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,-24,-10,23.5" KeyDown="Canvas_KeyDown" TouchUp="Canvas_TouchUp"/>
+        <InkCanvas Panel.ZIndex="0" x:Name="canvas" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,-24,-10,23.5" KeyDown="Canvas_KeyDown" TouchUp="Canvas_TouchUp"/>
+        <Grid Name="PenMenu" Width="200" Height="100">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Slider Name="SizeSlider" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" ValueChanged="SizeSlider_ValueChanged"/>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Name="BlackBtn" VerticalAlignment="Center" HorizontalAlignment="Center" Width="40" Height="40" Click="BlackBtn_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Grid>
+                                    <Ellipse Fill="Black"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Button Name="RedBtn" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="40" Height="40" Click="RedBtn_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Grid>
+                                    <Ellipse Fill="Red"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Name="BlueBtn" VerticalAlignment="Center" HorizontalAlignment="Center" Width="40" Height="40" Click="BlueBtn_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Grid>
+                                    <Ellipse Fill="Blue"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Button Name="YellowBtn" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="40" Height="40" Click="YellowBtn_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Grid>
+                                    <Ellipse Fill="Yellow"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </Grid>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>

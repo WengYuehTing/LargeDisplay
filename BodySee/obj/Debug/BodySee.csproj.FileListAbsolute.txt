@@ -35,3 +35,5 @@ C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Debug\Interop.Shell32.dll
 C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Debug\BodySee.csproj.ResolveComReference.cache
 C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\bin\Debug\AudioSwitcher.AudioApi.CoreAudio.dll
 C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\bin\Debug\AudioSwitcher.AudioApi.dll
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Debug\Windows\PenMenu.g.cs
+C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\obj\Debug\Windows\PenMenu.baml
