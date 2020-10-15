@@ -25,7 +25,8 @@ namespace BodySee.Windows
     public partial class Menu : Window, IVolumeInterface
     {
         #region Private Fields
-        private WhiteBoard _whiteBoard;
+        private WhiteBoard      _whiteBoard;
+        private VolumeWindow    _VolumeWindow;
         #endregion
 
         public Menu()
@@ -116,7 +117,8 @@ namespace BodySee.Windows
 
         private void ScreenshotIcon_TouchDown(object sender, TouchEventArgs e)
         {
-            ScreenShot();
+            if (_whiteBoard != null)
+                _whiteBoard.Clear();
         }
 
         private void DesktopIcon_TouchDown(object sender, TouchEventArgs e)
@@ -127,17 +129,32 @@ namespace BodySee.Windows
         private void AppListIcon_TouchDown(object sender, TouchEventArgs e)
         {
             //TODO 弹出App list
+            AppList list = new AppList(this);
+            list.Show();
         }
 
         private void VolumeIcon_TouchDown(object sender, TouchEventArgs e)
         {
-            //TODO 弹出音量Slider
+            VolumeWindow vw = new VolumeWindow(this);
+            vw.Show();
 
+            //TODO fix a position.
         }
 
         private void BrightnessIcon_TouchDown(object sender, TouchEventArgs e)
         {
-            //TODO 弹出亮度Slider
+            BrightnessWindow bw = new BrightnessWindow(this);
+            bw.Show();
+
+            //TODO fix a position.
+        }
+
+        private void Menu_LocationChanged(object sender, EventArgs e)
+        {
+            //TODO Make volume, brightness, app list follow menu
+            
+
+
         }
         #endregion
 
@@ -184,8 +201,10 @@ namespace BodySee.Windows
         {
             background.Focus();
         }
+
         #endregion
 
+        
         
     }
 }

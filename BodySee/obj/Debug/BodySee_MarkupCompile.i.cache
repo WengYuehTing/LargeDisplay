@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\SDI-Surface1\LargeDisplay\BodySee\BodySee\App.xaml
-41324637416
+7-1173956621
 
-21858176436
+24-1278436675
 23780163727
-Windows\BlockingWindow.xaml;Windows\GestureWindow.xaml;Windows\Menu.xaml;Windows\WhiteBoard.xaml;
+Windows\AppList.xaml;Windows\BlockingWindow.xaml;Windows\BrightnessWindow.xaml;Windows\GestureWindow.xaml;Windows\Menu.xaml;Windows\VolumeWindow.xaml;Windows\WhiteBoard.xaml;
 
 True
 

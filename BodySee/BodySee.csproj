@@ -84,10 +84,16 @@
     <Compile Include="Tools\ScreenTouchMode.cs" />
     <Compile Include="Tools\VolumeAdjuster.cs" />
     <Compile Include="Tools\WindowsHandler.cs" />
+    <Compile Include="Windows\AppList.xaml.cs">
+      <DependentUpon>AppList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\BlockingWindow.xaml.cs">
       <DependentUpon>BlockingWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tools\Client.cs" />
+    <Compile Include="Windows\BrightnessWindow.xaml.cs">
+      <DependentUpon>BrightnessWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\GestureWindow.xaml.cs">
       <DependentUpon>GestureWindow.xaml</DependentUpon>
     </Compile>
@@ -96,15 +102,23 @@
     <Compile Include="Windows\Menu.xaml.cs">
       <DependentUpon>Menu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\PenMenu.xaml.cs">
-      <DependentUpon>PenMenu.xaml</DependentUpon>
+    <Compile Include="Windows\VolumeWindow.xaml.cs">
+      <DependentUpon>VolumeWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\WhiteBoard.xaml.cs">
       <DependentUpon>WhiteBoard.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tools\WinApiManager.cs" />
     <Compile Include="Tools\WindowEntry.cs" />
+    <Page Include="Windows\AppList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\BlockingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\BrightnessWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -120,7 +134,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\PenMenu.xaml">
+    <Page Include="Windows\VolumeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

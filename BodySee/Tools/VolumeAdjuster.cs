@@ -36,12 +36,12 @@ namespace BodySee.Tools
         /// <summary>
         /// 设备所能设置音量的最大值
         /// </summary>        
-        private const double VOLUME_MAX = 100;
+        public const double VOLUME_MAX = 100;
 
         /// <summary>
         /// 设备所能设置音量的最小值
         /// </summary>
-        private const double VOLUME_MIN = 0;
+        public const double VOLUME_MIN = 0;
         #endregion
 
         #region Public Properties

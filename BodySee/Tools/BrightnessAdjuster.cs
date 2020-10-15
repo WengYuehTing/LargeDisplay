@@ -44,12 +44,12 @@ namespace BodySee.Tools
         /// <summary>
         /// 设备所能设置音量的最大值
         /// </summary>        
-        private const double BRIGHTNESS_MAX = 256;
+        public const double BRIGHTNESS_MAX = 256;
 
         /// <summary>
         /// 设备所能设置音量的最小值
         /// </summary>
-        private const double BRIGHTNESS_MIN = 1;
+        public const double BRIGHTNESS_MIN = 1;
         #endregion
 
         #region Public Methods
