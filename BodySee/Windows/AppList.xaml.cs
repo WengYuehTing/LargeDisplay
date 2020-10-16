@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BodySee.Tools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,8 +24,35 @@ namespace BodySee.Windows
         {
             InitializeComponent();
 
-            this.Width = menu.Width;
-            this.Height = 100;
+            this.Width = 1000;
+            this.Height = 1000;
+
+            GenerateData();
         }
+
+        private void GenerateData()
+        {
+            var apps = WindowsHandler.EnumerateWindow();
+            List<AppItem> items = new List<AppItem>();
+            foreach (IntPtr hwnd in apps)
+            {
+                string title = WindowsHandler.GetWindowTitle(hwnd);
+                ImageSource source = WindowsHandler.GetAppIcon(hwnd);
+                AppItem item = new AppItem() { Title = title, Source = source };
+                items.Add(item);
+            }
+
+            AppItemList.ItemsSource = items;
+        }
+
+        
+
+        
+    }
+
+    public class AppItem
+    {
+        public string Title { get; set; }
+        public ImageSource Source { get; set; }
     }
 }

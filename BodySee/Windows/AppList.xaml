@@ -5,8 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BodySee.Windows"
         mc:Ignorable="d"
-        Title="AppList" Height="450" Width="800">
+        Title="AppList" Height="137.5" Width="465.5">
     <Grid>
-        
+        <ListBox Name="AppItemList" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Image Source="{Binding Source}"></Image>
+                        <TextBlock Grid.Row="1" Text="{Binding Title}"></TextBlock>
+                    </Grid>
+
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>

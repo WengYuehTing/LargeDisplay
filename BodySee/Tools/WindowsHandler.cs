@@ -255,7 +255,6 @@ namespace BodySee.Tools
             {
                 if (!IsAltTabWindow(hwnd))
                     return true;
-
                 windows.Add(hwnd);
                 return true;
             }, 0);
@@ -271,7 +270,7 @@ namespace BodySee.Tools
         #endregion
 
         #region Get Window Parameter
-        private static String GetWindowTitle(IntPtr hWnd)
+        public static String GetWindowTitle(IntPtr hWnd)
         {
             StringBuilder Buff = new StringBuilder(256);
             if (WinApiManager.GetWindowText(hWnd, Buff, 256) > 0)
