@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Interop;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using BodySee.Windows;
 
 namespace BodySee.Tools
@@ -157,7 +161,8 @@ namespace BodySee.Tools
 
             if (!WinApiManager.IsWindowVisible(hwnd)) return false;
 
-            if (GetWindowTitle(hwnd) == null) return false;
+            string title = GetWindowTitle(hwnd);
+            if (title == null || title == "Menu" || title == "GestureWindow" || title == "BlockingWindow") return false;
 
             WinApiManager.WINDOWINFO winInfo = new WinApiManager.WINDOWINFO(true);
             WinApiManager.GetWindowInfo(hwnd, ref winInfo);
@@ -256,11 +261,11 @@ namespace BodySee.Tools
             }, 0);
 
 
-            Console.WriteLine(windows.Count);
-            foreach (IntPtr hWnd in windows)
-            {
-                Console.WriteLine(GetWindowTitle(hWnd));
-            }
+            //Console.WriteLine(windows.Count);
+            //foreach (IntPtr hWnd in windows)
+            //{
+            //    Console.WriteLine(GetWindowTitle(hWnd));
+            //}
             return windows;
         }
         #endregion
@@ -287,6 +292,33 @@ namespace BodySee.Tools
                 ? Application.Current.Windows.OfType<T>().Any()
                 : Application.Current.Windows.OfType<T>().Any(w => w.Name.Equals(name));
         }
+
+        public static ImageSource GetAppIcon(IntPtr hwnd)
+        {
+            try
+            {
+                IntPtr hIcon = default(IntPtr);
+                hIcon = WinApiManager.SendMessage(hwnd, WinApiManager.WM_GETICON, WinApiManager.ICON_SMALL2, IntPtr.Zero);
+
+                if (hIcon == IntPtr.Zero)
+                    hIcon = WinApiManager.GetClassLongPtr(hwnd, -14); // GCL_HICON
+
+                if (hIcon == IntPtr.Zero)
+                    hIcon = WinApiManager.LoadIcon(IntPtr.Zero, (IntPtr)0x7F00);
+
+                if (hIcon != IntPtr.Zero)
+                {
+                    Bitmap bmp = new Bitmap(Icon.FromHandle(hIcon).ToBitmap(), 64, 64);
+                    IntPtr hbmp = bmp.GetHbitmap();
+                    return Imaging.CreateBitmapSourceFromHBitmap(hbmp, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                }
+            } catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return null;
+        }
         #endregion
 
         #region Screen Parameters
@@ -300,9 +332,9 @@ namespace BodySee.Tools
             return SystemParameters.PrimaryScreenHeight;
         }
 
-        public static Size GetScreenSize()
+        public static System.Windows.Size GetScreenSize()
         {
-            return new Size(System.Windows.SystemParameters.PrimaryScreenWidth, System.Windows.SystemParameters.PrimaryScreenHeight);
+            return new System.Windows.Size(SystemParameters.PrimaryScreenWidth, System.Windows.SystemParameters.PrimaryScreenHeight);
         }
 
         #endregion 

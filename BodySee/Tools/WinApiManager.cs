@@ -76,6 +76,12 @@ namespace BodySee.Tools
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern int SendMessage(IntPtr hWnd, UInt32 Msg, UInt32 wParam, IntPtr lParam);
 
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr SendMessage(IntPtr hwnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
+        public static extern IntPtr SendMessageTimeout(IntPtr hWnd, uint msg, uint wParam, int lParam, uint fuFlags, uint uTimeout, out IntPtr lpdwResult);
+
         [DllImport("user32.dll", SetLastError = true)]
         static extern bool MoveWindow(IntPtr hwnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
 
@@ -135,6 +141,20 @@ namespace BodySee.Tools
         [DllImport("user32.dll")]
         public static extern bool BringWindowToTop(IntPtr hwnd);
 
+        [DllImport("gdi32.dll", EntryPoint = "DeleteObject")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool DeleteObject([In] IntPtr hObject);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr LoadIcon(IntPtr hInstance, IntPtr lpIconName);
+
+        [DllImport("user32.dll", EntryPoint = "GetClassLong")]
+        public static extern uint GetClassLong32(IntPtr hwnd, int nIndex);
+
+        [DllImport("user32.dll", EntryPoint = "GetClassLongPtr")]
+        public static extern IntPtr GetClassLong64(IntPtr hwnd, int nIndex);
+
+
         public delegate bool EnumWindowsProc(IntPtr hWnd, int lParam);
         #endregion
 
@@ -154,35 +174,21 @@ namespace BodySee.Tools
         public static int SWP_NOACTIVATE = 0x0010;
         public static int SWP_NOZORDER = 0x0004;
         public static int SWP_SHOWWINDOW = 0x0040;
+        public static IntPtr ICON_SMALL = new IntPtr(0);
+        public static IntPtr ICON_BIG = new IntPtr(1);
+        public static IntPtr ICON_SMALL2 = new IntPtr(2);
+        public static uint PerIconTimeoutMilliseconds = 50;
+        public static uint WM_GETICON = 0x7F;
+        public static uint SMTO_ABORTIFHUNG = 0x0002;
         #endregion
 
-        //private static List<IntPtr> EnumerateWindow()
-        //{
-        //    var lShellWin = GetShellWindow();
-        //    var currentProcessId = Process.GetCurrentProcess().Id;
-        //    List<IntPtr> windows = new List<IntPtr>();
-        //    EnumWindows(delegate (IntPtr wnd, int param)
-        //    {
-        //        if (!IsWindowValid(wnd))
-        //            return true;
+        public static IntPtr GetClassLongPtr(IntPtr hwnd, int nIndex)
+        {
+            if (IntPtr.Size == 4)
+                return new IntPtr((long)GetClassLong32(hwnd, nIndex));
+            else
+                return GetClassLong64(hwnd, nIndex);
+        }
 
-        //        var entry = WindowEntryFactory.Create(wnd);
-
-        //        if (entry == null || entry.ProcessId == currentProcessId)
-        //            return true;
-
-        //        windows.Add(wnd);
-        //        return true;
-        //    }, 0);
-
-
-        //    Console.WriteLine(windows.Count);
-        //    foreach (IntPtr hWnd in windows)
-        //    {
-        //        Console.WriteLine(GetTitleFromHandle(hWnd));
-        //    }
-
-        //    return windows;
-        //}
     }
 }

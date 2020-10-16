@@ -191,10 +191,10 @@ namespace BodySee.Windows
                 WindowsHandler.BlockingScreenTouch();
 
             if (e.KeyStates == Keyboard.GetKeyStates(Key.E))
-            {
                 BrightnessAdjuster.getInstance().SetBrightness(180);
-            }
-                
+
+            if (e.KeyStates == Keyboard.GetKeyStates(Key.R))
+                UndoIcon.Source = WindowsHandler.GetAppIcon(WindowsHandler.FindTopmostWindow());
         }
 
         private void Background_Loaded(object sender, RoutedEventArgs e)
