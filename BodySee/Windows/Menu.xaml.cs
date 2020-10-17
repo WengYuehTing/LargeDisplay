@@ -24,9 +24,10 @@ namespace BodySee.Windows
     /// </summary>
     public partial class Menu : Window, IVolumeInterface
     {
-        #region Private Fields
-        private WhiteBoard      _whiteBoard;
-        private VolumeWindow    _VolumeWindow;
+        #region Fields
+        private WhiteBoard              _whiteBoard;
+        private VolumeWindow            _VolumeWindow;
+        private YTMenuMovingComponent   _MovingComponent;
         #endregion
 
         public Menu()
@@ -38,49 +39,13 @@ namespace BodySee.Windows
             Client client = new Client();
             TaskManager.getInstance().menu = this;
             VolumeAdjuster.getInstance().Delegate = this;
+            _MovingComponent = new YTMenuMovingComponent(this, MovingMode.X);
         }
-
-        #region Public Methods
-        public void moveWindow(double x)
+           
+        public YTMenuMovingComponent GetComponent()
         {
-            this.Left += x;
+            return _MovingComponent;
         }
-
-        public void moveWindow(double x, double y)
-        {
-            this.Left += x;
-            this.Top += y;
-        }
-        #endregion
-
-
-        #region Private Methods
-        /// <summary>
-        /// Take a screenshot and save into local.
-        /// </summary>
-        private void ScreenShot()
-        {
-            double left = SystemParameters.VirtualScreenLeft;
-            double top = SystemParameters.VirtualScreenTop;
-            double width = SystemParameters.VirtualScreenWidth*2;
-            double height = SystemParameters.VirtualScreenHeight*2;
-            
-            SaveFileDialog f = new SaveFileDialog();
-            f.FileName = "screenshot" + DateTime.Now.ToString("yyyyMMddhhmmss");
-            f.DefaultExt = ".jpg";
-            f.Filter = "Image (.jpg .png) | *.jpg *.png";
-            if(f.ShowDialog() == true)
-            {
-                Task.Delay(500).ContinueWith(_ =>
-                {
-                    Bitmap bmp = new Bitmap((int)width, (int)height);
-                    Graphics g = Graphics.FromImage(bmp);
-                    g.CopyFromScreen((int)left, (int)top, 0, 0, bmp.Size);
-                    bmp.Save(f.FileName);
-                });
-            }
-        }
-        #endregion
 
 
         #region UI Events
@@ -191,7 +156,7 @@ namespace BodySee.Windows
                 WindowsHandler.BlockingScreenTouch();
 
             if (e.KeyStates == Keyboard.GetKeyStates(Key.E))
-                BrightnessAdjuster.getInstance().SetBrightness(180);
+                YTDataDecoder.run();
 
             if (e.KeyStates == Keyboard.GetKeyStates(Key.R))
                 UndoIcon.Source = WindowsHandler.GetAppIcon(WindowsHandler.FindTopmostWindow());

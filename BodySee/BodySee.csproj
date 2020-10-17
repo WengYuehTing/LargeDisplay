@@ -84,6 +84,10 @@
     <Compile Include="Tools\ScreenTouchMode.cs" />
     <Compile Include="Tools\VolumeAdjuster.cs" />
     <Compile Include="Tools\WindowsHandler.cs" />
+    <Compile Include="Tools\YTDataDecoder.cs" />
+    <Compile Include="Tools\YTFileReader.cs" />
+    <Compile Include="Tools\YTMenuMovingComponent.cs" />
+    <Compile Include="Tools\YTScreenShotHandler.cs" />
     <Compile Include="Windows\AppList.xaml.cs">
       <DependentUpon>AppList.xaml</DependentUpon>
     </Compile>
