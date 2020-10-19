@@ -19,6 +19,9 @@ namespace BodySee.Tools
         public UInt16[] Blue;
     }
 
+    /// <summary>
+    /// 目前方案是调整Gamma对比度不是亮度。
+    /// </summary>
     class BrightnessAdjuster
     {
         #region Singleton
@@ -34,11 +37,24 @@ namespace BodySee.Tools
         private BrightnessAdjuster() { }
         #endregion
 
+        public double Brightness
+        {
+            get
+            {
+                RAMP ramp = new RAMP();
+                GetDeviceGammaRamp(GetDC(IntPtr.Zero), ref ramp);
+                return (double)ramp.Red[1] - 128;
+            }
+        }
+
         [DllImport("user32.dll")]
         public static extern IntPtr GetDC(IntPtr hWnd);
 
         [DllImport("gdi32.dll")]
         public static extern bool SetDeviceGammaRamp(IntPtr hDC, ref RAMP lpRamp);
+
+        [DllImport("gdi32.dll")]
+        public static extern bool GetDeviceGammaRamp(IntPtr hDC, ref RAMP lpRamp);
 
         #region Private Constants
         /// <summary>
@@ -53,7 +69,7 @@ namespace BodySee.Tools
         #endregion
 
         #region Public Methods
-        public void SetBrightness(int _brightness)
+        public void SetBrightness(double _brightness)
         {
             if (_brightness <= BRIGHTNESS_MAX && _brightness >= BRIGHTNESS_MIN)
             {
@@ -63,7 +79,7 @@ namespace BodySee.Tools
                 ramp.Blue = new ushort[256];
                 for (int i = 1; i < 256; i++)
                 {
-                    int iArrayValue = i * (_brightness + 128);
+                    int iArrayValue = i * ((int)_brightness + 128);
                     if (iArrayValue > 65535)
                         iArrayValue = 65535;
                     ramp.Red[i] = ramp.Blue[i] = ramp.Green[i] = (ushort)iArrayValue;

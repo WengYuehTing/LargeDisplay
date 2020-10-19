@@ -27,7 +27,7 @@ namespace BodySee.Windows
             VolumeSlider.Maximum = VolumeAdjuster.VOLUME_MAX;
             VolumeSlider.Minimum = VolumeAdjuster.VOLUME_MIN;
             VolumeSlider.Value = VolumeAdjuster.getInstance().Volume;
-
+            VolumeSlider.ValueChanged += VolumeSlider_ValueChanged;
             this.Width = menu.Width;
             this.Height = 100;
         }

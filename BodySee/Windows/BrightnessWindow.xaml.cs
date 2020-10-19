@@ -26,14 +26,15 @@ namespace BodySee.Windows
 
             BrightnessSlider.Maximum = BrightnessAdjuster.BRIGHTNESS_MAX;
             BrightnessSlider.Minimum = BrightnessAdjuster.BRIGHTNESS_MIN;
-
+            BrightnessSlider.Value = BrightnessAdjuster.getInstance().Brightness;
+            BrightnessSlider.ValueChanged += BrightnessSlider_ValueChanged;
             this.Width = menu.Width;
             this.Height = 100;
         }
 
         private void BrightnessSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            BrightnessAdjuster.getInstance().SetBrightness((int)e.NewValue);
+            BrightnessAdjuster.getInstance().SetBrightness(e.NewValue);
         }
     }
 }

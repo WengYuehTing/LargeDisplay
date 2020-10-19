@@ -13,6 +13,6 @@
         </Grid.ColumnDefinitions>
 
         <Image Source="../Images/volume_tmp.jpeg"></Image>
-        <Slider Name="VolumeSlider" Grid.Column="1" VerticalAlignment="Center" Margin="10" ValueChanged="VolumeSlider_ValueChanged"></Slider>
+        <Slider Name="VolumeSlider" Grid.Column="1" VerticalAlignment="Center" Margin="10"></Slider>
     </Grid>
 </Window>

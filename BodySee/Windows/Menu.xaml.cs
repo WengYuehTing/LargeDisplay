@@ -26,8 +26,10 @@ namespace BodySee.Windows
     {
         #region Fields
         private WhiteBoard              _whiteBoard;
-        private VolumeWindow            _VolumeWindow;
         private YTMenuMovingComponent   _MovingComponent;
+        private VolumeWindow            _VolumeWindow;
+        private BrightnessWindow        _BrightnessWindow;
+        private AppList                 _AppList;
         #endregion
 
         public Menu()
@@ -94,22 +96,44 @@ namespace BodySee.Windows
         private void AppListIcon_TouchDown(object sender, TouchEventArgs e)
         {
             //TODO 弹出App list
-            AppList list = new AppList(this);
-            list.Show();
+            if(_AppList == null)
+            {
+                _AppList = new AppList(this);
+                _AppList.Show();
+            } else
+            {
+                _AppList.Close();
+                _AppList = null;
+            }
+            
         }
 
         private void VolumeIcon_TouchDown(object sender, TouchEventArgs e)
         {
-            VolumeWindow vw = new VolumeWindow(this);
-            vw.Show();
-
+            if(_VolumeWindow == null)
+            {
+                _VolumeWindow = new VolumeWindow(this);
+                _VolumeWindow.Show();
+            } else
+            {
+                _VolumeWindow.Close();
+                _VolumeWindow = null;
+            }
             //TODO fix a position.
         }
 
         private void BrightnessIcon_TouchDown(object sender, TouchEventArgs e)
         {
-            BrightnessWindow bw = new BrightnessWindow(this);
-            bw.Show();
+            if (_BrightnessWindow == null)
+            {
+                _BrightnessWindow = new BrightnessWindow(this);
+                _BrightnessWindow.Show();
+            }
+            else
+            {
+                _BrightnessWindow.Close();
+                _BrightnessWindow = null;
+            }
 
             //TODO fix a position.
         }
@@ -159,7 +183,7 @@ namespace BodySee.Windows
                 YTDataDecoder.run();
 
             if (e.KeyStates == Keyboard.GetKeyStates(Key.R))
-                UndoIcon.Source = WindowsHandler.GetAppIcon(WindowsHandler.FindTopmostWindow());
+                Console.WriteLine(BrightnessAdjuster.getInstance().Brightness);
         }
 
         private void Background_Loaded(object sender, RoutedEventArgs e)

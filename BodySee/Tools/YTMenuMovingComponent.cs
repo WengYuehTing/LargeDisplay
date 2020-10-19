@@ -89,9 +89,7 @@ namespace BodySee.Tools
             if (gx < SHAKING_INGORE_THRESHOLD)
                 return;
 
-
-
-
+            
             //Step4 创建动画
             Storyboard story = new Storyboard();
             DoubleAnimation animX = new DoubleAnimation(_Menu.Left, x, TimeSpan.FromMilliseconds(ANIMATION_DURATION));
