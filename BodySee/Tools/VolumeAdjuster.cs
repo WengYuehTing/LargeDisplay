@@ -7,12 +7,6 @@ using System.Threading.Tasks;
 
 namespace BodySee.Tools
 {
-    interface IVolumeInterface
-    {
-        void OnVolumeChange(double _vol);
-        void OnMutedChange(bool _mute);
-    }
-
     class VolumeAdjuster
     {
         #region Singleton
@@ -67,23 +61,22 @@ namespace BodySee.Tools
                 return Device.IsMuted;
             }
         }
-
-        public IVolumeInterface Delegate { get; set; }
+        
         #endregion
 
         #region Public Methods
         public void SetVolume(double _vol)
         {
             Device.Volume = Math.Min(VOLUME_MAX, Math.Max(VOLUME_MIN, _vol)); // limit it in 0 ~ 100
-            if(Delegate != null)
-                Delegate.OnVolumeChange(_vol);
+            if (Device.Volume == 0)
+                SetMute(true);
+            else
+                SetMute(false);
         }
 
         public void SetMute(bool _mute)
         {
             Device.Mute(_mute);
-            if (Delegate != null)
-                Delegate.OnMutedChange(_mute);
         }
         #endregion
     }

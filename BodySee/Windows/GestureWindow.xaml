@@ -11,7 +11,50 @@
         Topmost="true"
         WindowState="Maximized"
         Title="GestureWindow" Height="450" Width="800">
-    <Button Name="GestureButton" IsManipulationEnabled="True" Opacity="0.01" TouchDown="GestureButton_TouchDown" KeyDown="GestureButton_KeyDown" TouchMove="GestureButton_TouchMove" TouchUp="GestureButton_TouchUp" ManipulationStarting="GestureButton_ManipulationStarting" ManipulationDelta="GestureButton_ManipulationDelta" ManipulationInertiaStarting="GestureButton_ManipulationInertiaStarting" ManipulationCompleted="GestureButton_ManipulationCompleted">
-        
-    </Button>
+    
+    <!--<Button Name="GestureButton" IsManipulationEnabled="True" Opacity="0.01" TouchDown="GestureButton_TouchDown" KeyDown="GestureButton_KeyDown" TouchMove="GestureButton_TouchMove" TouchUp="GestureButton_TouchUp" ManipulationStarting="GestureButton_ManipulationStarting" ManipulationDelta="GestureButton_ManipulationDelta" ManipulationInertiaStarting="GestureButton_ManipulationInertiaStarting" ManipulationCompleted="GestureButton_ManipulationCompleted">
+    </Button>-->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid HorizontalAlignment="Stretch" Opacity="0.81" Height="30" Background="#B4C5FF" Grid.ColumnSpan="2">
+            <Grid HorizontalAlignment="Center" Margin="2" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Image Source="../Images/quanping.png" Grid.Column="0"></Image>
+                <TextBlock Text="全屏" FontSize="18" Foreground="White"  HorizontalAlignment="Center" Margin="10,0,0,0" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
+            </Grid>
+        </Grid>
+        <Grid Width="30" HorizontalAlignment="Left" Opacity="0.81" Background="#FFB4B4" Grid.Row="1">
+            <Grid HorizontalAlignment="Center" Margin="2" VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Image Source="../Images/shanchu.png" Grid.Row="0"></Image>
+                <TextBlock Text="删除" FontSize="18" Foreground="White" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="1" VerticalAlignment="Center"></TextBlock>
+            </Grid>
+        </Grid>
+        <Button Grid.Row="1" Grid.Column="1" Name="GestureButton" IsManipulationEnabled="True" Opacity="0.01" TouchDown="GestureButton_TouchDown" KeyDown="GestureButton_KeyDown" TouchMove="GestureButton_TouchMove" TouchUp="GestureButton_TouchUp" ManipulationStarting="GestureButton_ManipulationStarting" ManipulationDelta="GestureButton_ManipulationDelta" ManipulationInertiaStarting="GestureButton_ManipulationInertiaStarting" ManipulationCompleted="GestureButton_ManipulationCompleted"></Button>
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Opacity="0.81" Height="30" Background="#D7D7D7" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+            <Grid HorizontalAlignment="Center" Margin="2" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Image Source="../Images/zuixiaohua.png" Grid.Column="0"></Image>
+                <TextBlock Text="最小化" FontSize="18" Foreground="White"  HorizontalAlignment="Center" Margin="10,0,0,0" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
+            </Grid>
+        </Grid>
+    </Grid>
 </Window>

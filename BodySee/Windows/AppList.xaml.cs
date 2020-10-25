@@ -24,9 +24,10 @@ namespace BodySee.Windows
         {
             InitializeComponent();
 
-            this.Width = 1000;
-            this.Height = 1000;
-
+            this.Width = menu.Width;
+            this.Height = 120;
+            this.Top = menu.Top + menu.Height + 10;
+            this.Left = menu.Left;
             GenerateData();
         }
 
@@ -45,9 +46,11 @@ namespace BodySee.Windows
             AppItemList.ItemsSource = items;
         }
 
-        
-
-        
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            if (WindowState == WindowState.Maximized || WindowState == WindowState.Minimized)
+                WindowState = WindowState.Normal;
+        }
     }
 
     public class AppItem

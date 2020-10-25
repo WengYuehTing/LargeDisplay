@@ -61,6 +61,15 @@ namespace BodySee.Tools
             }
         }
 
+        public static void ShowWindow(IntPtr hwnd)
+        {
+            if(hwnd != IntPtr.Zero)
+            {
+                Console.WriteLine("Show Window: " + GetWindowTitle(hwnd));
+                WinApiManager.ShowWindow(hwnd, WinApiManager.SW_RESTORE);
+            }
+        }
+
         public static void MoveWindow(IntPtr hwnd, int xOffset, int yOffset)
         {
             if (hwnd != IntPtr.Zero)
@@ -99,13 +108,13 @@ namespace BodySee.Tools
         {
             Shell32.Shell shell = new Shell32.Shell();
             shell.ToggleDesktop();
-            foreach(Window window in Application.Current.Windows)
-            {
-                if(window.Title == "Menu" && window.WindowState == WindowState.Minimized)
-                {
-                    window.WindowState = WindowState.Normal;
-                }
-            }
+            //foreach(Window window in Application.Current.Windows)
+            //{
+            //    if(window.Title == "Menu" && window.WindowState == WindowState.Minimized)
+            //    {
+            //        window.WindowState = WindowState.Normal;
+            //    }
+            //}
         }
         #endregion
 
@@ -162,7 +171,7 @@ namespace BodySee.Tools
             if (!WinApiManager.IsWindowVisible(hwnd)) return false;
 
             string title = GetWindowTitle(hwnd);
-            if (title == null || title == "Menu" || title == "GestureWindow" || title == "BlockingWindow") return false;
+            if (title == null || title == "Menu" || title == "GestureWindow" || title == "BlockingWindow" || title == "AppList") return false;
 
             WinApiManager.WINDOWINFO winInfo = new WinApiManager.WINDOWINFO(true);
             WinApiManager.GetWindowInfo(hwnd, ref winInfo);
@@ -317,6 +326,11 @@ namespace BodySee.Tools
             }
 
             return null;
+        }
+
+        public static IntPtr GetWindowHandle(Window window)
+        {
+            return WinApiManager.FindWindowByCaption(IntPtr.Zero, window.Title);   
         }
         #endregion
 

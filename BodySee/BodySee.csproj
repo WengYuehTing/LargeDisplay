@@ -175,9 +175,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\whiteboard.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <COMReference Include="Shell32">
       <Guid>{50A7E9B0-70EF-11D1-B75A-00A0C90564FE}</Guid>
       <VersionMajor>1</VersionMajor>
@@ -189,13 +186,25 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\app_list_tmp.jpeg" />
-    <Resource Include="Images\brightness_tmp.jpeg" />
-    <Resource Include="Images\desktop_tmp.jpeg" />
-    <Resource Include="Images\redo_tmp.png" />
-    <Resource Include="Images\screenshot_tmp.png" />
-    <Resource Include="Images\undo_tmp.png" />
-    <Resource Include="Images\volume_tmp.jpeg" />
+    <Resource Include="Images\redo.png" />
+    <Resource Include="Images\undo.png" />
+    <Resource Include="Images\亮度.png" />
+    <Resource Include="Images\后台管理.png" />
+    <Resource Include="Images\新建.png" />
+    <Resource Include="Images\清空.png" />
+    <Resource Include="Images\音量.png" />
+    <Resource Include="Images\首页.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\亮度_高光.png" />
+    <Resource Include="Images\后台管理_高光.png" />
+    <Resource Include="Images\新建_高光.png" />
+    <Resource Include="Images\音量_高光.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\quanping.png" />
+    <Resource Include="Images\shanchu.png" />
+    <Resource Include="Images\zuixiaohua.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

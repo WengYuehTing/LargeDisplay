@@ -29,12 +29,20 @@ namespace BodySee.Windows
             VolumeSlider.Value = VolumeAdjuster.getInstance().Volume;
             VolumeSlider.ValueChanged += VolumeSlider_ValueChanged;
             this.Width = menu.Width;
-            this.Height = 100;
+            this.Height = 60;
+            this.Top = menu.Top + menu.Height;
+            this.Left = menu.Left;
         }
 
         private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             VolumeAdjuster.getInstance().SetVolume(e.NewValue);
+        }
+
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            if (WindowState == WindowState.Maximized || WindowState == WindowState.Minimized)
+                WindowState = WindowState.Normal;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace BodySee.Tools
             list = YTFileReader.GetFileContent(@"C:\Users\SDI-Surface1\Downloads\face_2_0_position.txt");
             int N = list.Count;
             DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(40); // 25 FPS
+            timer.Interval = TimeSpan.FromMilliseconds(66); // 25 FPS
             timer.Tick += new EventHandler(ExampleTick);
             timer.Start();
         }

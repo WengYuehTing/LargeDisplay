@@ -5,14 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BodySee.Windows"
         mc:Ignorable="d"
-        Title="VolumeWindow" Height="109.362" Width="375.697">
+        WindowStyle="None"
+        Topmost="true"
+        Title="VolumeWindow" Height="109.362" Width="375.697" StateChanged="Window_StateChanged">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-
-        <Image Source="../Images/volume_tmp.jpeg"></Image>
-        <Slider Name="VolumeSlider" Grid.Column="1" VerticalAlignment="Center" Margin="10"></Slider>
+        <Image Margin="5" Source="../Images/音量.png"></Image>
+        <Slider Margin="10" Name="VolumeSlider" IsSelectionRangeEnabled="True" Grid.Column="1" VerticalAlignment="Center" Style="{DynamicResource SliderStyle1}"></Slider>
     </Grid>
 </Window>

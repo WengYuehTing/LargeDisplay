@@ -7,7 +7,9 @@
         mc:Ignorable="d"
         Topmost="True"
         ResizeMode="NoResize"
-        Title="Menu" Height="210" Width="597" LocationChanged="Menu_LocationChanged">
+        WindowState="Normal"
+        StateChanged="Window_StateChanged"
+        Title="Menu" Height="480" Width="800" LocationChanged="Menu_LocationChanged">
     <Grid x:Name="background" KeyDown="Background_KeyDown" Focusable="True" Loaded="Background_Loaded">
         <Grid>
             <Grid.RowDefinitions>
@@ -21,10 +23,10 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Image x:Name="WhiteBoardIcon" Grid.Column="0" Source="../Images/whiteboard.jpg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TouchDown="WhiteBoardIcon_TouchDown" Margin="10"/>
-                <Image x:Name="UndoIcon" Grid.Column="1" Source="../Images/undo_tmp.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TouchDown="UndoIcon_TouchDown" Margin="10"/>
-                <Image x:Name="RedoIcon" Grid.Column="2" Source="../Images/redo_tmp.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TouchDown="RedoIcon_TouchDown" Margin="10"/>
-                <Image x:Name="ScreenshotIcon" Grid.Column="3" Source="../Images/screenshot_tmp.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TouchDown="ScreenshotIcon_TouchDown" Margin="10"/>
+                <Image x:Name="WhiteBoardIcon" Grid.Column="0" Source="../Images/新建.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TouchDown="WhiteBoardIcon_TouchDown" Margin="10"/>
+                <Image x:Name="UndoIcon" Grid.Column="1" Source="../Images/undo.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TouchDown="UndoIcon_TouchDown" Margin="10"/>
+                <Image x:Name="RedoIcon" Grid.Column="2" Source="../Images/redo.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TouchDown="RedoIcon_TouchDown" Margin="10"/>
+                <Image x:Name="ScreenshotIcon" Grid.Column="3" Source="../Images/清空.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TouchDown="ScreenshotIcon_TouchDown" Margin="10"/>
             </Grid>
 
             <Grid Grid.Row="1">
@@ -34,10 +36,10 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Image x:Name="DesktopIcon" Grid.Column="0" Source="../Images/desktop_tmp.jpeg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TouchDown="DesktopIcon_TouchDown" Margin="10"/>
-                <Image x:Name="AppListIcon" Grid.Column="1" Source="../Images/app_list_tmp.jpeg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TouchDown="AppListIcon_TouchDown" Margin="10"/>
-                <Image x:Name="VolumeIcon" Grid.Column="2" Source="../Images/volume_tmp.jpeg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TouchDown="VolumeIcon_TouchDown" Margin="10"/>
-                <Image x:Name="BrightnessIcon" Grid.Column="3" Source="../Images/brightness_tmp.jpeg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TouchDown="BrightnessIcon_TouchDown" Margin="10"/>
+                <Image x:Name="DesktopIcon" Grid.Column="0" Source="../Images/首页.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TouchDown="DesktopIcon_TouchDown" Margin="10"/>
+                <Image x:Name="AppListIcon" Grid.Column="1" Source="../Images/后台管理.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TouchDown="AppListIcon_TouchDown" Margin="10"/>
+                <Image x:Name="VolumeIcon" Grid.Column="2" Source="../Images/音量.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TouchDown="VolumeIcon_TouchDown" Margin="10"/>
+                <Image x:Name="BrightnessIcon" Grid.Column="3" Source="../Images/亮度.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TouchDown="BrightnessIcon_TouchDown" Margin="10"/>
             </Grid>
 
         </Grid>

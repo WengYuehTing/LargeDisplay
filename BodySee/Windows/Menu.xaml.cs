@@ -22,7 +22,7 @@ namespace BodySee.Windows
     /// <summary>
     /// Menu.xaml 的交互逻辑
     /// </summary>
-    public partial class Menu : Window, IVolumeInterface
+    public partial class Menu : Window
     {
         #region Fields
         private WhiteBoard              _whiteBoard;
@@ -40,7 +40,6 @@ namespace BodySee.Windows
            
             Client client = new Client();
             TaskManager.getInstance().menu = this;
-            VolumeAdjuster.getInstance().Delegate = this;
             _MovingComponent = new YTMenuMovingComponent(this, MovingMode.X);
         }
            
@@ -62,11 +61,13 @@ namespace BodySee.Windows
             {
                 _whiteBoard = new WhiteBoard();
                 _whiteBoard.Show();
+                WhiteBoardIcon.Source = new BitmapImage(new Uri(@"/Images/新建_高光.png", UriKind.RelativeOrAbsolute));
             }
             else
             {
                 _whiteBoard.Close();
                 _whiteBoard = null;
+                WhiteBoardIcon.Source = new BitmapImage(new Uri(@"/Images/新建.png", UriKind.RelativeOrAbsolute));
             }
         }
 
@@ -95,45 +96,45 @@ namespace BodySee.Windows
 
         private void AppListIcon_TouchDown(object sender, TouchEventArgs e)
         {
-            //TODO 弹出App list
-            if(_AppList == null)
-            {
-                _AppList = new AppList(this);
-                _AppList.Show();
-            } else
-            {
-                _AppList.Close();
-                _AppList = null;
-            }
-            
+            if (_VolumeWindow != null)
+                CloseVolumeWindow();
+
+            if (_BrightnessWindow != null)
+                CloseBrightnessWindow();
+
+            if (_AppList != null)
+                CloseAppListWindow();
+            else
+                OpenAppListWindow();
         }
 
         private void VolumeIcon_TouchDown(object sender, TouchEventArgs e)
         {
-            if(_VolumeWindow == null)
-            {
-                _VolumeWindow = new VolumeWindow(this);
-                _VolumeWindow.Show();
-            } else
-            {
-                _VolumeWindow.Close();
-                _VolumeWindow = null;
-            }
+            if (_BrightnessWindow != null)
+                CloseBrightnessWindow();
+
+            if (_AppList != null)
+                CloseAppListWindow();
+
+            if (_VolumeWindow != null)
+                CloseVolumeWindow();
+            else
+                OpenVolumeWindow();
             //TODO fix a position.
         }
 
         private void BrightnessIcon_TouchDown(object sender, TouchEventArgs e)
         {
-            if (_BrightnessWindow == null)
-            {
-                _BrightnessWindow = new BrightnessWindow(this);
-                _BrightnessWindow.Show();
-            }
+            if (_VolumeWindow != null)
+                CloseVolumeWindow();
+
+            if (_AppList != null)
+                CloseAppListWindow();
+
+            if (_BrightnessWindow != null)
+                CloseBrightnessWindow();
             else
-            {
-                _BrightnessWindow.Close();
-                _BrightnessWindow = null;
-            }
+                OpenBrightnessWindow();
 
             //TODO fix a position.
         }
@@ -141,35 +142,77 @@ namespace BodySee.Windows
         private void Menu_LocationChanged(object sender, EventArgs e)
         {
             //TODO Make volume, brightness, app list follow menu
-            
+            if(_VolumeWindow != null)
+            {
+                _VolumeWindow.Left = this.Left;
+                _VolumeWindow.Top = this.Top + this.Height;
+            }
+
+            if(_BrightnessWindow != null)
+            {
+                _BrightnessWindow.Left = this.Left;
+                _BrightnessWindow.Top = this.Top + this.Height;
+            }
+
+            if(_AppList != null)
+            {
+                _AppList.Left = this.Left;
+                _AppList.Top = this.Top + this.Height;
+            }
 
 
         }
-        #endregion
 
-
-        #region Interface Methods
-        /// <summary>
-        /// Implementation of IVolumeInterface methods.
-        /// </summary>
-        /// <param name="_vol"></param>
-        public void OnVolumeChange(double _vol)
+        private void Window_StateChanged(object sender, EventArgs e)
         {
-            if (_vol == 0)
-                VolumeAdjuster.getInstance().SetMute(true);
-            else
-                VolumeAdjuster.getInstance().SetMute(false);
+            if (WindowState == WindowState.Maximized || WindowState == WindowState.Minimized)
+                WindowState = WindowState.Normal;
         }
 
+        private void OpenVolumeWindow()
+        {
+            _VolumeWindow = new VolumeWindow(this);
+            _VolumeWindow.Show();
+            VolumeIcon.Source = new BitmapImage(new Uri(@"/Images/音量_高光.png", UriKind.RelativeOrAbsolute));
+        }
 
-        /// <summary>
-        /// Implementation of IVolumeInterface methods.
-        /// </summary>
-        /// <param name="_vol"></param>
-        public void OnMutedChange(bool _mute) { }
+        private void CloseVolumeWindow()
+        {
+            _VolumeWindow.Close();
+            _VolumeWindow = null;
+            VolumeIcon.Source = new BitmapImage(new Uri(@"/Images/音量.png", UriKind.RelativeOrAbsolute));
+        }
+
+        private void OpenBrightnessWindow()
+        {
+            _BrightnessWindow = new BrightnessWindow(this);
+            _BrightnessWindow.Show();
+            BrightnessIcon.Source = new BitmapImage(new Uri(@"/Images/亮度_高光.png", UriKind.RelativeOrAbsolute));
+        }
+
+        private void CloseBrightnessWindow()
+        {
+            _BrightnessWindow.Close();
+            _BrightnessWindow = null;
+            BrightnessIcon.Source = new BitmapImage(new Uri(@"/Images/亮度.png", UriKind.RelativeOrAbsolute));
+        }
+
+        private void OpenAppListWindow()
+        {
+            _AppList = new AppList(this);
+            _AppList.Show();
+            AppListIcon.Source = new BitmapImage(new Uri(@"/Images/后台管理_高光.png", UriKind.RelativeOrAbsolute));
+        }
+
+        private void CloseAppListWindow()
+        {
+            _AppList.Close();
+            _AppList = null;
+            AppListIcon.Source = new BitmapImage(new Uri(@"/Images/后台管理.png", UriKind.RelativeOrAbsolute));
+        }
         #endregion
 
-        
+
         #region Debug
         private void Background_KeyDown(object sender, KeyEventArgs e)
         {

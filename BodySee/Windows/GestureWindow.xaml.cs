@@ -103,6 +103,8 @@ namespace BodySee.Windows
                 bManipulating = true;
         }
 
+
+
         private void GestureButton_TouchUp(object sender, TouchEventArgs e)
         {
             if (longPressTimer.IsEnabled)
@@ -179,6 +181,7 @@ namespace BodySee.Windows
             e.TranslationBehavior.DesiredDeceleration = 10.0 * 96.0 / (1000.0 * 1000.0);
             e.ExpansionBehavior.DesiredDeceleration = 0.1 * 96 / (1000.0 * 1000.0);
             e.Handled = true;
+            
         }
 
         private void GestureButton_ManipulationCompleted(object sender, ManipulationCompletedEventArgs e)

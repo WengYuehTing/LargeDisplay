@@ -35,10 +35,11 @@ namespace BodySee.Tools
         private int _ScreenHeight;
         private Queue<double> _xQueue;
         private Queue<double> _yQueue;
+        private Queue<double> _ShakingQueue;
 
         private const int SMOOTH_CAPACILITY = 5;
-        private const int SHAKING_INGORE_THRESHOLD = 10;
-        private const int OUTLIER_INGORE_THRESHOLD = 100;
+        private const int SHAKING_INGORE_CAPACILITY = 30;
+        private const int SHAKING_INGORE_THRESHOLD = 15;
         private const int GLOBLE_WIDTH = 1600;
         private const int GLOBLE_HEIGHT = 1200;
         private const int ANIMATION_DURATION = 500; 
@@ -52,6 +53,7 @@ namespace BodySee.Tools
             _ScreenHeight = (int)WindowsHandler.GetScreenHeight();
             _xQueue = new Queue<double>();
             _yQueue = new Queue<double>();
+            _ShakingQueue = new Queue<double>();
         }
 
         public void run(string source)
@@ -87,15 +89,20 @@ namespace BodySee.Tools
                 _yQueue.Dequeue();
 
             if (gx < SHAKING_INGORE_THRESHOLD)
-                return;
+            {
+                _ShakingQueue.Enqueue(gx);
+                if(_ShakingQueue.Count >= SHAKING_INGORE_CAPACILITY)
+                {
+                    _ShakingQueue.Dequeue();
+                    return;
+                }
+            }
 
-            
             //Step4 创建动画
             Storyboard story = new Storyboard();
             DoubleAnimation animX = new DoubleAnimation(_Menu.Left, x, TimeSpan.FromMilliseconds(ANIMATION_DURATION));
             DoubleAnimation animY = new DoubleAnimation(_Menu.Top, y, TimeSpan.FromMilliseconds(ANIMATION_DURATION));
-
-
+            
             //Step5 移动
             if (_MovingMode == MovingMode.X)
             {
@@ -122,7 +129,8 @@ namespace BodySee.Tools
                 story.Begin(_Menu);
             }
 
-            
+            //Step6 刷新数据
+            _ShakingQueue.Clear();
         }
 
         

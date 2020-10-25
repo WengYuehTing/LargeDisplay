@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BodySee.Windows"
         mc:Ignorable="d"
+        WindowStyle="None"
         Title="AppList" Height="137.5" Width="465.5">
     <Grid>
         <ListBox Name="AppItemList" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -18,10 +19,10 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Image Source="{Binding Source}"></Image>
-                        <TextBlock Grid.Row="1" Text="{Binding Title}"></TextBlock>
+                        <Image Margin="10" Source="{Binding Source}"></Image>
+                        <TextBlock Grid.Row="1"  Width="100" FontSize="6" Text="{Binding Title}"></TextBlock>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
