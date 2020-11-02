@@ -75,6 +75,7 @@ namespace BodySee.Tools
                     String response = String.Empty;
                     NetworkStream stream = client.GetStream();
                     Int32 bytes = stream.Read(data, 0, data.Length);
+                    
                     response = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
                     Debug.WriteLine(response);
                     TaskManager.getInstance().Execute(response);
@@ -84,8 +85,6 @@ namespace BodySee.Tools
                     Console.WriteLine(e.Message);
                 }
             }
-            
-
         }
 
         /// <summary>
