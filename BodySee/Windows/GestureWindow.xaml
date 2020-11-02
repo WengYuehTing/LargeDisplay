@@ -11,7 +11,7 @@
         Topmost="true"
         WindowState="Maximized"
         Title="GestureWindow" Height="450" Width="800">
-    
+
     <!--<Button Name="GestureButton" IsManipulationEnabled="True" Opacity="0.01" TouchDown="GestureButton_TouchDown" KeyDown="GestureButton_KeyDown" TouchMove="GestureButton_TouchMove" TouchUp="GestureButton_TouchUp" ManipulationStarting="GestureButton_ManipulationStarting" ManipulationDelta="GestureButton_ManipulationDelta" ManipulationInertiaStarting="GestureButton_ManipulationInertiaStarting" ManipulationCompleted="GestureButton_ManipulationCompleted">
     </Button>-->
     <Grid>
@@ -46,8 +46,12 @@
             </Grid>
         </Grid>
         <Button Grid.Row="1" Grid.Column="1" Name="GestureButton" IsManipulationEnabled="True" Opacity="0.01" TouchDown="GestureButton_TouchDown" KeyDown="GestureButton_KeyDown" TouchMove="GestureButton_TouchMove" TouchUp="GestureButton_TouchUp" ManipulationStarting="GestureButton_ManipulationStarting" ManipulationDelta="GestureButton_ManipulationDelta" ManipulationInertiaStarting="GestureButton_ManipulationInertiaStarting" ManipulationCompleted="GestureButton_ManipulationCompleted"></Button>
-        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Opacity="0.81" Height="30" Background="#D7D7D7" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
-            <Grid HorizontalAlignment="Center" Margin="2" VerticalAlignment="Center">
+        <Grid VerticalAlignment="Bottom" Opacity="0.81" Height="30" Background="#D7D7D7" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid HorizontalAlignment="Center" Margin="355,2" VerticalAlignment="Center" Grid.RowSpan="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>

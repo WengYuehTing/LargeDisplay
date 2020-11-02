@@ -205,47 +205,6 @@ namespace BodySee.Tools
             return IntPtr.Zero;
         }
 
-
-        private static bool IsWindowInterested(IntPtr window)
-        {
-            if (window == WinApiManager.GetShellWindow())
-                return false;
-
-            IntPtr root = WinApiManager.GetAncestor(window, WinApiManager.GetAncestorFlags.GetRootOwner);
-
-            if (GetLastVisibleActivePopUpOfWindow(root) != window)
-                return false;
-
-            if (GetWindowTitle(window) == null)
-                return false;
-
-            if (!WinApiManager.IsWindowVisible(window))
-                return false;
-
-            var classNameStringBuilder = new StringBuilder(256);
-            var length = WinApiManager.GetClassName(window, classNameStringBuilder, classNameStringBuilder.Capacity);
-            if (length == 0)
-                return false;
-
-            string[] classNameToSkip =
-            {
-                "Shell_TrayWnd",
-                "DV2ControlHost",
-                "MsgrIMEWindowClass",
-                "SysShadow",
-                "Button"
-            };
-
-            var className = classNameStringBuilder.ToString();
-            if (Array.IndexOf(classNameToSkip, className) > -1)
-                return false;
-
-            if (className.StartsWith("WMP9MediaBarFlyout"))
-                return false;
-
-            return true;
-        }
-
         private static IntPtr GetLastVisibleActivePopUpOfWindow(IntPtr window)
         {
             IntPtr lastPopUp = WinApiManager.GetLastActivePopup(window);

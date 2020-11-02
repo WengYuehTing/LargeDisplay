@@ -26,24 +26,27 @@ namespace BodySee.Windows
         private IntPtr                          _hwnd;
         private Dictionary<int, List<Point>>    finger1;
         private Dictionary<int, List<Point>>    finger2;
+        private Stopwatch                       _watch1;
+        private Stopwatch                       _watch2;
         private bool                            bLongPressing;
         private bool                            bManipulating;
         private DispatcherTimer                 longPressTimer;
+        private long                            _currentTime;
         #endregion
 
         #region Threshold Definitions
         
         //滑动至少需要滑动的距离
         private const int SWIPE_THRESHOLD = 10;
-        
         //滑动时对于另外一个方向的容忍度
         private const int SWIPE_LIMITED = 100;
-
         //长按至少需要维持几秒
         private const int LONG_PRESS_DURATION = 500;
-
         //长按时对于手抖的容忍度
         private const int LONG_PRESS_LIMITED = 20;
+        //判断Drag和Swipe区别时的圆半径
+        private const int RADIUS = 100;
+        private const int TIME_THRESHOLD = 500;
         #endregion
 
         public GestureWindow()
@@ -64,6 +67,8 @@ namespace BodySee.Windows
             };
         }
         
+
+        private Stopwatch watch;
         private void GestureButton_TouchDown(object sender, TouchEventArgs e)
         {
             // 长按开始计时
@@ -76,9 +81,16 @@ namespace BodySee.Windows
             int id = e.TouchDevice.Id;
             Point start = this.PointToScreen(new Point(e.GetTouchPoint(this).Position.X, e.GetTouchPoint(this).Position.Y));   
             if (finger1.Count == 0)
+            {
                 finger1.Add(id, new List<Point>() { start });
+                _watch1 = Stopwatch.StartNew();
+            }
             else
+            {
                 finger2.Add(id, new List<Point>() { start });
+                _watch2 = Stopwatch.StartNew();
+            }
+
 
         }
 
@@ -97,6 +109,10 @@ namespace BodySee.Windows
                 finger2[id].Add(position);
                 if (longPressTimer.IsEnabled && Point.Subtract(position, finger2[id][0]).Length > LONG_PRESS_LIMITED)
                     longPressTimer.Stop();
+                var xSpeed = (position.X - finger2[id][0].X) / watch.ElapsedMilliseconds;
+                var ySpeed = (position.Y - finger2[id][0].Y) / watch.ElapsedMilliseconds;
+                Console.WriteLine("id {0}, x diff {1}, y diff {2}", id, xSpeed, ySpeed);
+
             }
 
             if(!longPressTimer.IsEnabled && bLongPressing && finger1.Count != 0 && finger2.Count != 0)
@@ -109,7 +125,7 @@ namespace BodySee.Windows
         {
             if (longPressTimer.IsEnabled)
                 longPressTimer.Stop();
-            
+
             //if (finger1.Count != 0 && finger2.Count != 0 && !bLongPressing)
             //{
             //    var list1 = finger1.ElementAt(0).Value;
@@ -117,7 +133,7 @@ namespace BodySee.Windows
 
             //    int n1 = list1.Count;
             //    int n2 = list2.Count;
-            //    if(list1[n1 - 1].Y - list1[0].Y > SWIPE_THRESHOLD && list2[n2 - 1].Y - list2[0].Y > SWIPE_THRESHOLD && Math.Abs(list1[n1 - 1].X - list1[0].X) < SWIPE_LIMITED && Math.Abs(list2[n2 - 1].X - list2[0].X) < SWIPE_LIMITED)
+            //    if (list1[n1 - 1].Y - list1[0].Y > SWIPE_THRESHOLD && list2[n2 - 1].Y - list2[0].Y > SWIPE_THRESHOLD && Math.Abs(list1[n1 - 1].X - list1[0].X) < SWIPE_LIMITED && Math.Abs(list2[n2 - 1].X - list2[0].X) < SWIPE_LIMITED)
             //    {
             //        Console.WriteLine("双指下滑");
             //        WindowsHandler.MinimizeWindow(_hwnd);
@@ -158,7 +174,7 @@ namespace BodySee.Windows
             _manipulationTimer.Restart();
             e.ManipulationContainer = this;
             e.Handled = true;
-            
+            e.Manipulators.ToArray();
         }
 
         private void GestureButton_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
@@ -181,13 +197,12 @@ namespace BodySee.Windows
             e.TranslationBehavior.DesiredDeceleration = 10.0 * 96.0 / (1000.0 * 1000.0);
             e.ExpansionBehavior.DesiredDeceleration = 0.1 * 96 / (1000.0 * 1000.0);
             e.Handled = true;
-            
         }
 
         private void GestureButton_ManipulationCompleted(object sender, ManipulationCompletedEventArgs e)
         {
             var millis = _manipulationTimer.ElapsedMilliseconds;
-            Console.WriteLine();
+            
         }
     }
 }
