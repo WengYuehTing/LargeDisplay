@@ -211,7 +211,6 @@ namespace BodySee.Windows
         
         private void GestureButton_ManipulationInertiaStarting(object sender, ManipulationInertiaStartingEventArgs e)
         {
-            
             e.TranslationBehavior.DesiredDeceleration = 10.0 * 96.0 / (1000.0 * 1000.0);
             e.ExpansionBehavior.DesiredDeceleration = 0.1 * 96 / (1000.0 * 1000.0);
             e.Handled = true;
