@@ -22,7 +22,7 @@
                             <RowDefinition Height="Auto"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Image Margin="10" Source="{Binding Source}"></Image>
-                        <TextBlock Grid.Row="1"  Width="100" FontSize="6" Text="{Binding Title}"></TextBlock>
+                        <TextBlock Grid.Row="1" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" FontSize="10" Text="{Binding Title}"></TextBlock>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

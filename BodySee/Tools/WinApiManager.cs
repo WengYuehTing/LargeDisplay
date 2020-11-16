@@ -86,7 +86,7 @@ namespace BodySee.Tools
         static extern bool MoveWindow(IntPtr hwnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
 
         [DllImport("user32.dll")]
-        public static extern bool ShowWindow(IntPtr hwnd, uint flags);
+        public static extern bool ShowWindow(IntPtr hwnd, int flags);
 
         [DllImport("user32.dll")]
         public static extern bool EnumWindows(EnumWindowsProc enumProc, int lParam);
@@ -169,7 +169,8 @@ namespace BodySee.Tools
         public static UInt32 SC_LASTWINDOW = 0xF050;
         public static UInt32 SC_MOVE = 0xF010;
         public static UInt32 SC_SIZE = 0xF000;
-        public static uint SW_RESTORE = 0x09;
+        public static int SW_RESTORE = 9;
+        public static int SW_SHOW = 5;
         public static int SWP_NOMOVE = 0x0002;
         public static int SWP_NOSIZE = 0x0001;
         public static int SWP_NOACTIVATE = 0x0010;
