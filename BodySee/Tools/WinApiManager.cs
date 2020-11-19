@@ -105,6 +105,13 @@ namespace BodySee.Tools
         public static extern IntPtr GetForegroundWindow();
 
         [DllImport("user32.dll")]
+        public static extern int SetForegroundWindow(IntPtr hwnd);
+
+        [DllImport("user32.dll")]
+        public static extern void SwitchToThisWindow(IntPtr hwnd, bool turnOn);
+                
+
+        [DllImport("user32.dll")]
         public static extern int GetWindowText(IntPtr hwnd, StringBuilder text, int count);
 
         [DllImport("user32.dll")]
@@ -153,6 +160,10 @@ namespace BodySee.Tools
 
         [DllImport("user32.dll", EntryPoint = "GetClassLongPtr")]
         public static extern IntPtr GetClassLong64(IntPtr hwnd, int nIndex);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool IsIconic(IntPtr hwnd);
 
 
         public delegate bool EnumWindowsProc(IntPtr hWnd, int lParam);

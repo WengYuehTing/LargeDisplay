@@ -66,7 +66,7 @@ namespace BodySee.Tools
             if(hwnd != IntPtr.Zero)
             {
                 Console.WriteLine("Show Window: " + GetWindowTitle(hwnd));
-                WinApiManager.ShowWindow(hwnd, 10);
+                WinApiManager.ShowWindow(hwnd, WinApiManager.SW_SHOW);
             }
         }
 
@@ -241,7 +241,7 @@ namespace BodySee.Tools
 
         public static IntPtr GetHandleFromTitle(string title)
         {
-            return WinApiManager.FindWindowByCaption(IntPtr.Zero, title);
+            return WinApiManager.FindWindow("", title);
         }
 
 

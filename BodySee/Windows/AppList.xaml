@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:BodySee.Windows"
         mc:Ignorable="d"
         WindowStyle="None"
-        Title="AppList" Height="137.5" Width="465.5">
+        Title="AppList">
     <Grid>
-        <ListBox Name="AppItemList" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <ListBox Name="AppItemList" SelectionChanged="AppItemList_SelectionChanged" BorderThickness="0" VerticalContentAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal"></StackPanel>
@@ -21,7 +21,7 @@
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="Auto"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Image Margin="10" Source="{Binding Source}"></Image>
+                        <Image Source="{Binding Source}"></Image>
                         <TextBlock Grid.Row="1" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" FontSize="10" Text="{Binding Title}"></TextBlock>
                     </Grid>
                 </DataTemplate>

@@ -204,7 +204,7 @@ namespace BodySee.Windows
             AppListIcon.Source = new BitmapImage(new Uri(@"/Images/后台管理_高光.png", UriKind.RelativeOrAbsolute));
         }
 
-        private void CloseAppListWindow()
+        public void CloseAppListWindow()
         {
             _AppList.Close();
             _AppList = null;
