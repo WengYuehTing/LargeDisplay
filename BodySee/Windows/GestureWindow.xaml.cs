@@ -49,7 +49,7 @@ namespace BodySee.Windows
         private const int LONG_PRESS_LIMITED = 20;
         //判断Drag和Swipe区别时的圆半径
         private const int RADIUS = 600;
-        private const int TIME_THRESHOLD = 500;
+        private const int TIME_THRESHOLD = 250;
         #endregion
 
         public GestureWindow()
@@ -153,12 +153,12 @@ namespace BodySee.Windows
                     if (list1[n1 - 1].Y - list1[0].Y > SWIPE_THRESHOLD && list2[n2 - 1].Y - list2[0].Y > SWIPE_THRESHOLD && Math.Abs(list1[n1 - 1].X - list1[0].X) < SWIPE_LIMITED && Math.Abs(list2[n2 - 1].X - list2[0].X) < SWIPE_LIMITED)
                     {
                         Console.WriteLine("双指下滑");
-                        //WindowsHandler.MinimizeWindow(_hwnd);
+                        WindowsHandler.MinimizeWindow(_hwnd);
                     }
                     else if (list1[0].Y - list1[n1 - 1].Y > SWIPE_THRESHOLD && list2[0].Y - list2[n2 - 1].Y > SWIPE_THRESHOLD && Math.Abs(list1[n1 - 1].X - list1[0].X) < SWIPE_LIMITED && Math.Abs(list2[n2 - 1].X - list2[0].X) < SWIPE_LIMITED)
                     {
                         Console.WriteLine("双指上滑");
-                        //WindowsHandler.MaximizeWindow(_hwnd);
+                        WindowsHandler.MaximizeWindow(_hwnd);
                     }
                     else if (list1[n1 - 1].X - list1[0].X > SWIPE_THRESHOLD && list2[n2 - 1].X - list2[0].X > SWIPE_THRESHOLD && Math.Abs(list1[n1 - 1].Y - list1[0].Y) < SWIPE_LIMITED && Math.Abs(list2[n2 - 1].Y - list2[0].Y) < SWIPE_LIMITED)
                     {
@@ -168,7 +168,7 @@ namespace BodySee.Windows
                     else if (list1[0].X - list1[n1 - 1].X > SWIPE_THRESHOLD && list2[0].X - list2[n2 - 1].X > SWIPE_THRESHOLD && Math.Abs(list1[n1 - 1].Y - list1[0].Y) < SWIPE_LIMITED && Math.Abs(list2[n2 - 1].Y - list2[0].Y) < SWIPE_LIMITED)
                     {
                         Console.WriteLine("双指左滑");
-                        //WindowsHandler.CloseWindow(_hwnd);
+                        WindowsHandler.CloseWindow(_hwnd);
                     }
                 }
             finger1 = new Dictionary<int, List<YTPoint>>();
