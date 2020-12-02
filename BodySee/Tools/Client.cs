@@ -12,8 +12,6 @@ namespace BodySee.Tools
     class Client
     {
         #region Private Field
-        private const Int32 port = 1234;
-        private const String IP = "192.168.5.130";
         private TcpClient client;
         #endregion
 
@@ -21,11 +19,11 @@ namespace BodySee.Tools
         /// <summary>
         /// Constructor. Try to connect to a TCP server. 
         /// </summary>
-        public Client()
+        public Client(string ip, int port)
         {
             try
             {
-                client = new TcpClient(IP, port);
+                client = new TcpClient(ip, port);
                 Console.WriteLine("Connected to a server!");
                 Thread thread = new Thread(Receive);
                 thread.Start();

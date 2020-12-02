@@ -89,6 +89,13 @@ namespace BodySee.Tools
                     case "restore":
                         WindowsHandler.RestoreWindow(WindowsHandler.FindTopmostWindow());
                         break;
+                    default:
+                        //string[] data = command.Split(',');
+                        //float x = float.Parse(data[0]);
+                        //float y = float.Parse(data[1]);
+                        menu.GetComponent().run(command);
+                        return;
+                       
                 }
             }));
             

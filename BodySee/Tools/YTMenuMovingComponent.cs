@@ -63,6 +63,9 @@ namespace BodySee.Tools
             if (posData[3] == 0.0f) // error code
                 throw new Exception("Fail to decode body position");
 
+            if (posData[1] == 0.0f && posData[2] == 0.0f)
+                return;
+
             //Step2 转成屏幕坐标系
             posData = Translate(posData[1], posData[2]);
 

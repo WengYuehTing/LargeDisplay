@@ -38,7 +38,7 @@ namespace BodySee.Windows
             this.Width = WindowsHandler.GetScreenWidth() * WindowsHandler.WRATIO;
             this.Height = WindowsHandler.GetScreenHeight() * WindowsHandler.HRATIO;
            
-            Client client = new Client();
+            Client client = new Client("127.0.0.1", 1234);
             TaskManager.getInstance().menu = this;
             _MovingComponent = new YTMenuMovingComponent(this, MovingMode.X);
         }
