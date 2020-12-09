@@ -48,6 +48,8 @@ namespace BodySee.Windows
         #region Private Fields
         private CommandStack        _cmdStack;
         private int                 _editingOperationCount;
+        private Point               _lastTouchPoint;
+        private bool                _bAllowingSizeChanging;
         #endregion
 
         #region Private Constant
@@ -129,6 +131,7 @@ namespace BodySee.Windows
             HighlightBrush = new CustomBrush(DEFAULT_HIGHTLIGHT_COLOR, DEFAULT_HIGHLIGHT_WIDTH, DEFAULT_HIGHLIGHT_HEIGHT);
             FingerEraserSize = new EllipseStylusShape(50, 50);
             PalmEraserSize = new EllipseStylusShape(500, 500);
+            _bAllowingSizeChanging = true;
             EnterNormalBrushMode();
             
 
@@ -142,10 +145,12 @@ namespace BodySee.Windows
         /// </summary>
         public void EnterNormalBrushMode()
         {
+            _bAllowingSizeChanging = false;
             BrushMode = ESupportedBrush.Normal;
             SizeSlider.Maximum = MAX_NORMAL_SIZE;
             SizeSlider.Minimum = MIN_NORMAL_SIZE;
             SizeSlider.Value = NormalBrush.Width;
+            _bAllowingSizeChanging = true;
         }
 
 
@@ -170,10 +175,12 @@ namespace BodySee.Windows
         /// </summary>
         public void EnterHighlightBrushMode()
         {
+            _bAllowingSizeChanging = false;
             BrushMode = ESupportedBrush.Highlight;
             SizeSlider.Maximum = MAX_HIGHLIGHT_HEIGHT;
             SizeSlider.Minimum = MIN_HIGHLIGHT_HEIGHT;
             SizeSlider.Value = HighlightBrush.Height;
+            _bAllowingSizeChanging = true;
         }
 
         public void ChangeHighlightBrushColor(Color color)
@@ -189,6 +196,20 @@ namespace BodySee.Windows
         public void ChangeHighlightBrushHeight(double height)
         {
             HighlightBrush.Height = height;
+        }
+
+        public void OpenPenMenu(int x, int y)
+        {
+            PenMenu.Visibility = Visibility.Visible;
+            Thickness margin = PenMenu.Margin;
+            margin.Left = x; margin.Top = y;
+            PenMenu.Margin = margin;
+
+        }
+
+        public void ClosePenMenu()
+        {
+            PenMenu.Visibility = Visibility.Collapsed;
         }
 
 
@@ -295,18 +316,20 @@ namespace BodySee.Windows
             }
         }
 
-        public void ShowPenMenu(int x, int y)
+        public void TogglePenMenu(int x = 0, int y = 0)
         {
-            PenMenu.Visibility = Visibility.Visible;
-            Thickness margin = PenMenu.Margin;
-            margin.Left = x;
-            margin.Top = y;
-            PenMenu.Margin = margin;
-        }
-
-        public void HidePenMenu()
-        {
-            PenMenu.Visibility = Visibility.Collapsed;
+            if(PenMenu.Visibility == Visibility.Collapsed)
+            {
+                PenMenu.Visibility = Visibility.Visible;
+                Thickness margin = PenMenu.Margin;
+                margin.Left = _lastTouchPoint.X;
+                margin.Top = _lastTouchPoint.Y;
+                Console.WriteLine(_lastTouchPoint.X);
+                PenMenu.Margin = margin;
+            } else
+            {
+                PenMenu.Visibility = Visibility.Collapsed;
+            }
         }
 
 
@@ -335,6 +358,9 @@ namespace BodySee.Windows
         private void Canvas_TouchUp(object sender, TouchEventArgs e)
         {
             _editingOperationCount++;
+            int id = e.TouchDevice.Id;
+            _lastTouchPoint = e.GetTouchPoint(null).Position;
+            
         }
 
 
@@ -367,6 +393,12 @@ namespace BodySee.Windows
             {
                 EnterHighlightBrushMode();
                 
+            }
+
+            if (e.KeyStates == Keyboard.GetKeyStates(Key.Z))
+            {
+                Console.WriteLine(NormalBrush.Width);
+
             }
         }
         #endregion
@@ -413,6 +445,9 @@ namespace BodySee.Windows
 
         private void SizeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            if (!_bAllowingSizeChanging)
+                return;
+
             if (BrushMode == ESupportedBrush.Normal)
             {
                 NormalBrush.Width = e.NewValue;

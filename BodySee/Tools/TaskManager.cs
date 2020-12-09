@@ -68,6 +68,9 @@ namespace BodySee.Tools
                     case "highlight_brush":
                         whiteBoard.EnterHighlightBrushMode();
                         break;
+                    case "pen_menu":
+                        whiteBoard.TogglePenMenu();
+                        break;
                     case "two_fingers":
                         WindowsHandler.AcquirePriortyofScreenTouch();
                         break;
@@ -94,7 +97,7 @@ namespace BodySee.Tools
                         //float x = float.Parse(data[0]);
                         //float y = float.Parse(data[1]);
                         menu.GetComponent().run(command);
-                        return;
+                        break;
                        
                 }
             }));

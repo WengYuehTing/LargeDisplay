@@ -9,7 +9,7 @@
         Title="WhiteBoard" Height="450" Width="800">
     <Grid>
         <InkCanvas Panel.ZIndex="0" x:Name="canvas" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,-24,-10,23.5" KeyDown="Canvas_KeyDown" TouchUp="Canvas_TouchUp"/>
-        <Grid Name="PenMenu" Width="200" Height="100">
+        <Grid Background="AliceBlue" Name="PenMenu" Width="200" Height="100" Visibility="Collapsed" Margin="0,0,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
